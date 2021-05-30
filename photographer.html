@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>FishEye | Photographe</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="photographer-header">
+      <a href="index.html" class="header-logo">
+        <img alt="Fisheye Home page" src="images/logo.png" class="logo"/>
+      </a>
+    </header>
+
+    <main class="photographer-main">
+      <div>
+        <section class="photographer-section-contact">
+
+        </section>
+
+        <div>
+            <label for="order-by" >Trier par</label>
+            <select id="order-by" name="order-by" class="order-by">
+                <option value="popularite">Popularité</option>
+                <option value="date">Date</option>
+                <option value="titre">Titre</option>
+            </select>
+        </div>
+
+        <section class="section-media">
+            <div class="media-contenant" id="media-contenant">
+                
+            </div>
+        </section>
+      </div>
+
+      <div class="modal-initial" id="modal-initial">
+        <div class="content">
+          <div class="modal-body">
+            <div class="modal-header">
+              <h1 id="modal-header">
+              </h1>
+              <button id="modal-header-close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </button>
+            </div>            
+            <form
+              id="form"
+              name="reserve"
+              action="index.html"
+              method="get"
+            >
+              <div
+                class="formData">
+                <label for="first">Prénom</label><br>
+                <input
+                  class="text-control"
+                  type="text"
+                  id="first"
+                  name="first"
+                  minlength="2"
+                  required
+                />
+                <div class="formulaire-alerte" id="alerte-prenom"></div>
+                <!-- <br> -->
+              </div>
+              <div
+                class="formData">
+                <label for="last">Nom</label><br>
+                <input
+                  class="text-control"
+                  type="text"
+                  id="last"
+                  name="last"
+                  required
+                />
+                <div class="formulaire-alerte" id="alerte-nom"></div>
+                <!-- <br> -->
+              </div>
+              <div
+                class="formData">
+                <label for="email">Email</label><br>
+                <input
+                  class="text-control"
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                />
+                <div class="formulaire-alerte" id="alerte-email"></div>
+                <!-- <br> -->
+              </div>
+              <div
+                class="formData">
+                <label for="message">Votre message</label><br>
+                <textarea
+                  class="text-control textarea-control"
+                  id="message"
+                  name="message"
+                  rows="5" 
+                  cols="33"
+                  required
+                >
+                </textarea>
+                <div class="formulaire-alerte" id="alerte-message"></div>
+                <!-- <br> -->
+              </div>
+              
+              <input
+                class="button contact-button btn-submit"
+                type="submit"
+                value="Envoyer"
+                id="submitBtn"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="bground" id="bground-success">
+        <div class="content">
+          <span class="close" id="close-modal-success"></span>
+          <div class="modal-body modal-success">
+            <form action="index.html">
+              <br>
+              <br>
+              <br>
+              <br>
+              <p>
+                Merci ! Votre réservation a été reçue.
+              </p>
+              <br>
+              <br>
+              <br>
+              <br>
+              <input
+                id="successBtn"
+                class="button btn-submit"
+                type="submit"
+                value="Fermer"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <dialog id="dialog" class="dialog">
+        
+        <i class="fa fa-chevron-left dialog-arrow-left"></i>
+        
+        <div class="media-card">
+          <div id="dialog-img-container" class="image-container">
+          </div>
+          <div id="dialog-banner-media" class="banner-media">
+            <h3 id="title-dialog"></h3>
+          </div>
+        </div>   
+        <div class="dialog-right">
+          <i class="fa fa-chevron-right dialog-arrow-right"></i>
+          <button id="dialog-close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+      </dialog>
+
+      <div class="photographer-belowElements">
+      </div>
+
+    </main>
+    <footer>
+    </footer>
+    <script src="dist/bundle-photographer.js"></script>
+  </body>
+</html>

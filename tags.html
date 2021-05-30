@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>FishEye | Tags</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="photographer-header">
+      <a href="index.html" class="header-logo">
+        <img alt="Fisheye Home page" src="images/logo.png" class="logo"/>
+      </a>
+    </header>
+
+    <main class="photographer-main">
+      <div>
+
+        <div>
+            <label for="order-by" >Trier par</label>
+            <select id="order-by" name="order-by" class="order-by">
+                <option value="popularite">Popularité</option>
+                <hr class="separationBar">
+                <hr>
+                <option value="date">Date</option>
+                <option value="titre">Titre</option>
+            </select>
+        </div>
+
+        <section class="section-media">
+            <div class="media-contenant" id="media-contenant">
+                
+            </div>
+        </section>
+      </div>
+    </main>
+    <footer>
+    </footer>
+    <script src="dist/bundle-tags.js"></script>
+  </body>
+</html>
