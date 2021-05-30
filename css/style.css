@@ -1,0 +1,337 @@
+@font-face {
+  font-family: "Open";
+  src: url("../fonts/Open/OpenSans-Regular.ttf");
+}
+@font-face {
+  font-family: "OpenSemiBold";
+  src: url("../fonts/Open/OpenSans-Semibold.ttf");
+}
+@font-face {
+  font-family: "OpenLight";
+  src: url("../fonts/Open/OpenSans-Light.ttf");
+}
+body {
+  font-family: "Open";
+  font-size: 1.5em;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+}
+
+.homepage-header {
+  display: flex;
+  position: absolute;
+  width: 75%;
+  z-index: 1;
+}
+
+.homepage-main {
+  position: relative;
+}
+
+.main-navbar {
+  font-family: "OpenSemiBold";
+  display: flex;
+  flex-direction: column;
+}
+.main-navbar-redirection {
+  align-self: center;
+  background-color: #D3573C;
+  height: fit-content;
+  width: fit-content;
+  padding: 0em 0.6em 0em 0.6em;
+  border-radius: 0.2em;
+}
+.main-navbar-list {
+  list-style-type: none;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+.main-navbar-list li {
+  border: #FAFAFA solid 2px;
+  border-radius: 1em;
+  padding: 0em 0.3em 0em 0.3em;
+  font-size: medium;
+}
+.main-navbar-list li a {
+  color: #901C1C !important;
+}
+
+.header-logo {
+  margin-top: auto;
+  justify-content: center;
+}
+
+select option[value=date] {
+  font-size: large;
+  color: yellow;
+  border: 3px solid white;
+}
+select option[value=date]::after {
+  border-top: 3px solid white;
+}
+
+.media-contenant {
+  position: relative;
+  top: 2em;
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  grid-gap: 4em;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.media-card {
+  display: block;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-media {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  color: #901C1C;
+}
+
+.portrait-container {
+  width: 11em;
+  height: 11em;
+  background-size: cover;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.contact-button {
+  color: white;
+  background-color: #901C1C;
+  border-radius: 0.3em;
+  border: 0;
+  border-color: #901C1C;
+  padding: 1em;
+  font-size: large;
+  cursor: pointer;
+}
+
+.title {
+  font-family: "OpenLight";
+  position: absolute;
+  right: 1em;
+  width: 25%;
+  color: #901C1C;
+}
+
+.section-artists {
+  position: relative;
+  top: 6em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.card-artists {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1em;
+}
+.card-artists p {
+  text-align: center;
+  line-height: 0.6em;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+.card-artists-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.artist-name {
+  color: #D3573C;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+.artist-location {
+  color: #901C1C;
+  font-size: medium;
+}
+
+.artist-tagline {
+  font-size: small;
+}
+
+.artist-price {
+  color: #525252;
+  font-size: small;
+}
+
+.artist-tags {
+  width: auto !important;
+  padding: 0;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+.photographer-main {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.photographer-image {
+  width: auto;
+  height: 12em;
+  border-radius: 0.3em;
+}
+
+.image-container {
+  background-size: cover;
+  border-radius: 0.3em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+}
+
+.photographer-section-contact {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding: 2em 2em 1em 2em;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  background-color: #FAFAFA;
+}
+
+.contact-div {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.contact-text {
+  margin-right: 2em;
+}
+
+.photographer-belowElements {
+  position: fixed;
+  padding: 0.8em;
+  display: flex;
+  justify-content: space-between;
+  background-color: #D3573C;
+  bottom: -0.2em;
+  right: 3em;
+  border-radius: 0.3em;
+  font-weight: bold;
+  width: 12em;
+}
+
+.modal-initial {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(26, 39, 156, 0.4);
+}
+
+.content {
+  margin: 5% auto;
+  width: 100%;
+  max-width: 500px;
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
+  background: #D3573C;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  padding-top: 10px;
+}
+
+.modal-body {
+  padding: 15px 8%;
+  margin: 15px auto;
+}
+
+.text-control {
+  margin: 0;
+  width: 100%;
+  border-radius: 0.3em;
+  font-size: 20px;
+  height: 2em;
+  border: none;
+}
+
+.textarea-control {
+  height: 6em;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.7em;
+}
+.modal-header h1 {
+  margin: 0;
+}
+.modal-header button {
+  font-size: 2.3em;
+  color: white;
+  background: none;
+  border: none;
+  align-self: start;
+  cursor: pointer;
+}
+
+.formData {
+  margin-bottom: 0.7em;
+}
+
+.order-by {
+  color: white;
+  background-color: #901C1C;
+  font-size: medium;
+  padding: 0.5em;
+  border-color: #901C1C;
+  border-radius: 0.3em;
+}
+
+.dialog {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: row;
+  border: none;
+  align-items: center;
+  color: #901C1C;
+}
+.dialog button {
+  cursor: pointer;
+  border: none;
+  color: inherit;
+  background: none;
+  font: inherit;
+  position: relative;
+  bottom: 9em;
+  left: -1.2em;
+}
+.dialog-arrow-left {
+  font-size: 1.5em !important;
+  margin-right: 1.5em;
+}
+.dialog-right {
+  margin-left: 1.5em;
+  font-size: 1.5em !important;
+}
+
+/*# sourceMappingURL=style.css.map */
