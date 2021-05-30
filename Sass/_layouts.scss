@@ -1,0 +1,90 @@
+.homepage-header {
+    display: flex;
+    position: absolute;
+    width: 75%;
+    z-index: 1;
+}
+
+.homepage-main {
+    position: relative;
+}
+
+.main-navbar {
+    font-family: "OpenSemiBold";
+    display: flex;
+    flex-direction: column;
+    &-redirection {
+        align-self: center;
+        background-color: $color-site-2;
+        height: fit-content;
+        width: fit-content;
+        padding: 0em 0.6em 0em 0.6em;
+        // font-size: larger;
+        border-radius: 0.2em;
+    }
+    &-list {
+        list-style-type: none;
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        & li {
+            border: $color-site-3 solid 2px;
+            border-radius: 1em;
+            padding: 0em 0.3em 0em 0.3em;
+            font-size: medium;
+            & a {
+                color: $color-site-1!important;
+            }
+        }
+    }
+}
+
+.header-logo {
+    // margin-bottom: auto;
+    margin-top: auto;
+    justify-content: center ;
+}
+
+select option[value="date"] {
+    font-size: large;
+    color: yellow;
+    border: 3px solid white;
+    &::after {
+    border-top: 3px solid white;
+    }
+}
+
+.media-contenant {
+    position: relative;
+    top: 2em;
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    grid-gap: 4em;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.media-card {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+}
+
+.banner-media {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    color: $color-site-1;
+}
+
+.portrait-container {
+    width: 11em;
+    height: 11em;
+    background-size: cover;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    // overflow: hidden;
+}
+

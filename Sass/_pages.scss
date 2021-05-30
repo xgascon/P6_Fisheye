@@ -1,0 +1,230 @@
+// Home page
+
+.title {
+    font-family: 'OpenLight';
+    position: absolute;
+    // text-align: right;
+    // top: -2em;
+    right: 1em;
+    width: 25%;
+    color: $color-site-1;
+}
+
+.section-artists {
+    position: relative;
+    top: 6em;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.card-artists {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 1em;
+    & p {
+        text-align: center;
+        line-height: 0.6em;
+        margin-top: 0.1em;
+        margin-bottom: 0.1em;
+    }
+    &-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+// .portrait-img {
+//     width: auto;
+//     height: 12em;
+//     clip-path: circle(50%);
+//     // clip-path: circle(4em at 50% 50%);
+//     // border-radius: 50%;
+//     border: 0.3em rgba(64,64,64,0.15) solid;
+// }
+
+.artist-name {
+    color: $color-site-2;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+}
+
+.artist-location {
+    color: $color-site-1;
+    font-size: medium;
+}
+
+.artist-tagline {
+    font-size: small;
+}
+
+.artist-price {
+    color: $color-site-4;
+    font-size: small;
+}
+
+.artist-tags {
+    width: auto!important;
+    padding: 0;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+}
+
+.photographer-main {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.photographer-image {
+    width: auto;
+    height: 12em;
+    border-radius: 0.3em;
+}
+
+.image-container {
+    // width: 200px;
+    // height: 200px;
+    background-size: cover;
+    border-radius: 0.3em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+}
+
+.photographer-section-contact {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding: 2em 2em 1em 2em;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    background-color: $color-site-3;
+}
+
+.contact-div {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.contact-text {
+    margin-right: 2em;
+}
+
+.photographer-belowElements {
+    position: fixed;
+    padding: 0.8em;
+    display: flex;
+    justify-content: space-between;
+    background-color: $color-site-2;
+    bottom: -0.2em;
+    right: 3em;
+    border-radius: 0.3em;
+    font-weight: bold;
+    width: 12em;
+}
+
+.modal-initial {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(26, 39, 156, 0.4);
+}
+  
+.content {
+    margin: 5% auto;
+    width: 100%;
+    max-width: 500px;
+    animation-name: modalopen;
+    animation-duration: var(--modal-duration);
+    background: $color-site-2;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    padding-top: 10px;
+}
+
+.modal-body {
+    padding: 15px 8%;
+    margin: 15px auto;
+}
+
+.text-control {
+    margin: 0;
+    width: 100%;
+    border-radius: 0.3em;
+    font-size: 20px;
+    height: 2em;
+    border: none;
+}
+
+.textarea-control {
+    height: 6em;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.7em;
+    & h1 {
+        margin: 0;
+    }
+    & button {
+        font-size: 2.3em;
+        color: white;
+        background: none;
+        border: none;
+        align-self: start;
+        cursor: pointer;
+    }
+}
+
+.formData {
+    margin-bottom: 0.7em;
+}
+
+.order-by {
+    color: white;
+    background-color: $color-site-1;
+    font-size: medium;
+    padding: 0.5em;
+    border-color: $color-site-1;
+    border-radius: 0.3em;
+}
+
+.dialog {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+    border: none;
+    align-items: center;
+    color: $color-site-1;
+    & button {
+        cursor: pointer;
+        border: none;
+        color: inherit;
+        background: none;
+        font: inherit;
+        position: relative;
+        bottom: 9em;
+        left: -1.2em;
+    }
+    &-arrow-left {
+        font-size: 1.5em!important;
+        margin-right: 1.5em;
+    }
+    &-right {
+        margin-left: 1.5em;
+        font-size: 1.5em!important;
+    }
+}
