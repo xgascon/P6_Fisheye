@@ -67,7 +67,7 @@
                   minlength="2"
                   required
                 />
-                <div class="formulaire-alerte" id="alerte-prenom"></div>
+                <div class="formulaire-alerte" id="alerte-first"></div>
                 <!-- <br> -->
               </div>
               <div
@@ -80,7 +80,7 @@
                   name="last"
                   required
                 />
-                <div class="formulaire-alerte" id="alerte-nom"></div>
+                <div class="formulaire-alerte" id="alerte-last"></div>
                 <!-- <br> -->
               </div>
               <div
@@ -103,11 +103,8 @@
                   class="text-control textarea-control"
                   id="message"
                   name="message"
-                  rows="5" 
-                  cols="33"
                   required
-                >
-                </textarea>
+                ></textarea>
                 <div class="formulaire-alerte" id="alerte-message"></div>
                 <!-- <br> -->
               </div>
@@ -123,37 +120,10 @@
         </div>
       </div>
 
-      <div class="bground" id="bground-success">
-        <div class="content">
-          <span class="close" id="close-modal-success"></span>
-          <div class="modal-body modal-success">
-            <form action="index.html">
-              <br>
-              <br>
-              <br>
-              <br>
-              <p>
-                Merci ! Votre réservation a été reçue.
-              </p>
-              <br>
-              <br>
-              <br>
-              <br>
-              <input
-                id="successBtn"
-                class="button btn-submit"
-                type="submit"
-                value="Fermer"
-              />
-            </form>
-          </div>
-        </div>
-      </div>
-
       <dialog id="dialog" class="dialog">
-        
-        <i class="fa fa-chevron-left dialog-arrow-left"></i>
-        
+        <button id="dialog-previous" class="dialog-arrow-left">
+          <i class="fa fa-chevron-left"></i>
+        </button>
         <div class="media-card">
           <div id="dialog-img-container" class="image-container">
           </div>
@@ -162,8 +132,10 @@
           </div>
         </div>   
         <div class="dialog-right">
-          <i class="fa fa-chevron-right dialog-arrow-right"></i>
-          <button id="dialog-close">
+          <button id="dialog-next" class="dialog-arrow-right">
+            <i class="fa fa-chevron-right"></i>
+          </button>
+          <button id="dialog-close" class="dialog-close">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
         </div>
