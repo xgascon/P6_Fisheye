@@ -5,17 +5,25 @@ const tag = urlParams.get('tag');
 
 const sectionMedia = document.querySelector(".section-media");
 const mediaContenant = document.getElementById("media-contenant") ;
-// let mediaContenanttest ;
-
 const orderBy = document.querySelector(".order-by");
+const dialog = document.getElementById('dialog');
+const dialogImgContainer = document.getElementById('dialog-img-container');
+const dialogBannerMedia = document.getElementById('dialog-banner-media');
+const dialogClose = document.getElementById('dialog-close');
+const titleDialog = document.getElementById('title-dialog');
+const dialogPrevious = document.getElementById('dialog-previous');
+const dialogNext = document.getElementById('dialog-next');
+
+dialogClose.addEventListener("click", function() {
+    dialog.close();
+    dialog.style.display = 'none';
+})
 
 // Gérer la fonction pour que criteria s'adapte en fonction du sortCriteria
 function sorting(table, sortCriteria) {
     let x = sortCriteria == "titre" ? 1 : -1;
     let y = sortCriteria == "titre" ? -1 : 1;
     let criteria = "likes";
-    console.log('passe ici');
-    console.log(criteria);
     if(sortCriteria == "date") {
         criteria = "date";
     } else if(sortCriteria == "titre") {
@@ -30,13 +38,6 @@ function eventHandler(sortCriteria = "popularite") {
         console.log(ns.media);
         mediaContenant.innerHTML = "" ;
 
-        // let mediaTag = [];
-        let imageMedia = [];
-        let photographerMediaId = [];
-
-        let arrayMediaToInput = []; //contient objets avec nom image, chemin et nom photographe
-
-        // To do 
         let mediaTag = ns.media.reduce(function(accumulator, element){
             let elementTags = element.tags;
             if(elementTags.includes("portait")){
@@ -55,100 +56,58 @@ function eventHandler(sortCriteria = "popularite") {
             return accumulator;
         },[]) 
 
-        // let mediaTag = ns.media.filter(function(element){
-        //     return element.tags.includes("fashion");
-        // });
-
-        // mediaTag.map(function(element){
-        //     let photographer = ns.photographers.find(photographer => photographer.id == element.photographerId);
-        //     let photographerSurname = photographer.name.split(' ')[0];
-        //     photographerSurname = photographerSurname.replaceAll("-", " ");
-        //     let mediaPath = "./images/"+photographerSurname+"/"+element.image;
-        //     element.imagePath = mediaPath; 
-        //     element.photographer = photographer;
-        //     return element;
-        // })
-
-        console.log("mediaTag")
-        console.log(mediaTag)
-
-        // To do 
-
         mediaTag = sorting(mediaTag, sortCriteria)
-                // if (sortCriteria == "popularite") {
-                //     mediaTag.sort((a, b) => (a.likes > b.likes) ? -1 : 1);
-                //     console.log(sortCriteria);
-                // } else if (sortCriteria == "date") {
-                //     mediaTag.sort((a, b) => (a.date > b.date) ? -1 : 1);
-                //     console.log(sortCriteria);
-                // } else if (sortCriteria == "titre") {
-                //     mediaTag.sort((a, b) => (a.title > b.title) ? 1 : -1);
-                //     console.log(sortCriteria);
-                // }
 
         console.log("mediaTag avec sorting")
         console.log(mediaTag)
-        // mediaTag.forEach(element => {
-        //     console.log(element.photographerId + element.image);
-        //     imageMedia.push(element.image);
-        //     photographerMediaId.push(element.photographerId)
-        // });
-
-        // console.log(photographerMediaId)
-
-        // let photographerMediaName = [];
-
-        
-
-        // To do 
-            // photographerMediaId.forEach(idToTranslate => {
-            //     console.log("aa"+idToTranslate)
-                
-            //     ns.photographers.forEach(photographer => {
-            //         let photographerSurname = photographer.name.split(' ')[0];
-            //         if(idToTranslate == photographer.id) {
-            //             console.log("ff"+idToTranslate)
-
-            //             // To do 
-            //             if(photographerSurname.split('-').length > 1) {
-            //                 let nameBitsAssembled = photographerSurname.split('-')[0];
-            //                 for (i = 1; i <= photographerSurname.split('-').length-1; i++) {
-            //                     nameBits = " "+photographerSurname.split('-')[i];
-            //                     nameBitsAssembled += nameBits;
-            //                 }
-            //                 photographerSurname = nameBitsAssembled;
-            //             }
-            //             photographerMediaName.push(photographerSurname)
-            //         }
-            //     })
-            // });
-
-        // console.log(photographerMediaName)
-        // console.log(imageMedia)
-
-        // let arrayPath = []
-
-        // for (i = 0; i <= photographerMediaName.length-1; i++) {
-        //     arrayPath.push("./images/"+photographerMediaName[i]+"/"+imageMedia[i])
-        // }
-
-        // console.log(arrayPath)
 
         mediaTag.forEach(elt => {
             let mediaCard = document.createElement("div");
             mediaCard.className = "media-card";
 
+            mediaContenant.appendChild(mediaCard);
+
+            let mediaDiv = document.createElement("div");
+            mediaDiv.className = "image-container";
+
+            mediaDiv.addEventListener("click", function() {
+                let mediaIndex = (mediaTag.findIndex(element => element == elt))
+                dialog.style.display = 'flex';
+                dialog.showModal();
+
+                defineDialogImg()
+
+                function defineDialogImg() {
+                    let backgroundDialog = mediaTag[mediaIndex].mediaPath;
+                    dialogImgContainer.setAttribute("style", `background-image: url(${backgroundDialog.replace(" ", "%20")}); width: 25em; height: 25em`);
+                    titleDialog.innerHTML = mediaTag[mediaIndex].title;
+                }            
+
+                dialogPrevious.addEventListener("click", function() {
+                    if(mediaIndex == 0) {
+                        mediaIndex = mediaTag.length-1
+                    } else {
+                        mediaIndex--;
+                    } 
+                    defineDialogImg();
+                })
+
+                dialogNext.addEventListener("click", function() {
+                    if(mediaIndex == mediaTag.length-1) {
+                        mediaIndex = 0
+                    } else {
+                        mediaIndex++;
+                    }                    
+                    defineDialogImg();
+                })
+
+            })
+
             if (elt.image) {
 
-                let imageTagAttributes = {
-                    "src": elt.mediaPath, 
-                    class: "photographer-image"
-                };
-        
-                let imageTag = createMedia("img", imageTagAttributes);
-                
-                mediaContenant.appendChild(mediaCard);
-                mediaCard.appendChild(imageTag);
+                let background = elt.mediaPath;                
+                mediaDiv.setAttribute("style", `background-image: url(${background.replace(" ","%20")})`);
+
             } else if (elt.video) {
 
                 let videoSourceAttributes = {
@@ -168,8 +127,7 @@ function eventHandler(sortCriteria = "popularite") {
 
                 video.appendChild(videoSource);
 
-                mediaContenant.appendChild(mediaCard);
-                mediaCard.appendChild(video);
+                mediaDiv.appendChild(video);
             }
 
             let bannerMedia = document.createElement("div");
@@ -188,10 +146,19 @@ function eventHandler(sortCriteria = "popularite") {
             
             let heart = createMedia("i", heartAttributes);
 
+            mediaCard.appendChild(mediaDiv);
             mediaCard.appendChild(bannerMedia);
             bannerMedia.appendChild(title);
             bannerMedia.appendChild(likes);
             likes.appendChild(heart);
+
+            for (let i = 0; i < document.getElementsByClassName("image-container").length; i++) {
+                const element = document.getElementsByClassName("image-container")[i];
+                let width = document.querySelector(".media-card").clientWidth;
+                let height = width; 
+                let style = element.getAttribute("style");            
+                element.setAttribute("style", `${style}; width: ${width}px; height: ${height}px`);  
+            }
         })
     })
     .catch((error) => {

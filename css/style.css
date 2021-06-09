@@ -20,6 +20,19 @@ a {
   text-decoration: none;
 }
 
+:root {
+  --modal-duration: 0.8s;
+}
+
+@keyframes modalopen {
+  from {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+  to {
+    opacity: 1;
+  }
+}
 .homepage-header {
   display: flex;
   position: absolute;
@@ -29,6 +42,7 @@ a {
 
 .homepage-main {
   position: relative;
+  margin-bottom: 10em;
 }
 
 .main-navbar {
@@ -37,12 +51,17 @@ a {
   flex-direction: column;
 }
 .main-navbar-redirection {
+  display: none;
   align-self: center;
   background-color: #D3573C;
   height: fit-content;
   width: fit-content;
   padding: 0em 0.6em 0em 0.6em;
   border-radius: 0.2em;
+  position: fixed;
+  top: 0.5em;
+  right: 50%;
+  left: 50%;
 }
 .main-navbar-list {
   list-style-type: none;
@@ -72,6 +91,17 @@ select option[value=date] {
 }
 select option[value=date]::after {
   border-top: 3px solid white;
+  background-color: white;
+  content: "after";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .media-contenant {
@@ -183,6 +213,7 @@ select option[value=date]::after {
 .photographer-main {
   margin-left: 2em;
   margin-right: 2em;
+  margin-bottom: 5em;
 }
 
 .photographer-image {
@@ -298,16 +329,16 @@ select option[value=date]::after {
 .order-by {
   color: white;
   background-color: #901C1C;
-  font-size: medium;
+  font-size: 20px;
   padding: 0.5em;
   border-color: #901C1C;
   border-radius: 0.3em;
 }
 
 .dialog {
+  display: none;
   width: 100%;
   height: 100%;
-  display: flex;
   justify-content: center;
   align-content: center;
   flex-direction: row;
@@ -321,9 +352,6 @@ select option[value=date]::after {
   color: inherit;
   background: none;
   font: inherit;
-  position: relative;
-  bottom: 9em;
-  left: -1.2em;
 }
 .dialog-arrow-left {
   font-size: 1.5em !important;
@@ -332,6 +360,15 @@ select option[value=date]::after {
 .dialog-right {
   margin-left: 1.5em;
   font-size: 1.5em !important;
+}
+.dialog-close {
+  position: relative;
+  bottom: 9em;
+  left: -1.2em;
+}
+
+.formulaire-alerte {
+  font-size: small;
 }
 
 /*# sourceMappingURL=style.css.map */

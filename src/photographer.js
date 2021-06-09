@@ -17,13 +17,24 @@ const dialogClose = document.getElementById('dialog-close');
 const titleDialog = document.getElementById('title-dialog');
 const dialogPrevious = document.getElementById('dialog-previous');
 const dialogNext = document.getElementById('dialog-next');
-// let mediaContenanttest ;
-
 const orderBy = document.querySelector(".order-by");
-
-// function sorting(table, criteria) {
-//     table.sort((a, b) => (a.criteria > b.criteria) ? -1 : 1);
-// };
+const first = document.getElementById('first');
+const last = document.getElementById('last');
+const email = document.getElementById('email');
+const message = document.getElementById('message');
+const alerteFirst = document.getElementById('alerte-first');
+const alerteLast = document.getElementById('alerte-last');
+const alerteEmail = document.getElementById('alerte-email');
+const alerteMessage = document.getElementById('alerte-message');
+const verificationMessages = {
+    charInputSize: "Veuillez entrer 2 caractères ou plus pour le champ !",
+    inputEmail: "Veuillez renseigner une adresse email correcte !",
+}
+const submitBtn = document.getElementById('submitBtn');
+let heartAttributes = {
+    "aria-label": "likes", 
+    class: "fa fa-heart"
+};
 
 // 
 // Modals launching and closing
@@ -33,16 +44,6 @@ const orderBy = document.querySelector(".order-by");
 function launchModal(modal) {
     modal.style.display = "block";
 }
-
-// close modal initial event
-// closeModalInitial.addEventListener("click", function() {
-//     closeModal(modalInitial)
-// });
-
-// close modal success event
-// closeModalSuccess.addEventListener("click", function() {
-//     closeModal(modalSuccess)
-// });
 
 // close modals
 function closeModal(modal) {
@@ -55,14 +56,113 @@ modalClose.addEventListener("click", function() {
 
 dialogClose.addEventListener("click", function() {
     dialog.close();
+    dialog.style.display = 'none';
 })
 
-// Launch modal success and close modal initial event
-// form.addEventListener('submit', function(event) {
-//     event.preventDefault();
-//     closeModal(modalInitial);
-//     launchModal(modalSuccess);
-// });
+// 
+// Code for form verifications
+// 
+
+// RegEx to verify email input 
+var emailRegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+// 
+// Verification inputs on change of their data events
+// 
+
+first.addEventListener('input', function() {
+    verificationCharInput(alerteFirst, first)
+});
+
+last.addEventListener('input', function() {
+    verificationCharInput(alerteLast, last)
+});
+
+email.addEventListener('input', function() {
+    verificationInputEmail(alerteEmail, email)
+});
+
+message.addEventListener('input', function() {
+    verificationCharInput(alerteMessage, message)
+}); 
+
+// Launching error or validation layout
+function alertInput(condition, alerteElement, input, message) {
+    condition ? erreurInput(alerteElement, message, input) : validationInput(alerteElement, input)
+}
+  
+// Verification for inputs requiring 2 characters 
+function verificationCharInput(alerteElement, input) {
+    let condition = input.value.substr(1) === '';
+    console.log(input.value)
+    alertInput(condition, alerteElement, input, verificationMessages.charInputSize);
+}
+  
+// Verification for inputs requiring an email
+function verificationInputEmail(alerteElement, input) {
+    let condition = !emailRegExp.test(input.value);
+    alertInput(condition, alerteElement, input, verificationMessages.inputEmail);
+}
+
+// 
+// Notifications form
+// 
+
+// Alert notification for wrong input
+function erreurInput(alerteElement, erreur, input) {
+    alerteElement.innerHTML = erreur;
+    alerteElement.style.color = 'black';
+    input.style.border = "2px solid black";
+}
+
+// Success notification for correct input
+let validationInputMessage = "Champ correctement rempli."
+function validationInput(alerteElement, input) {
+    alerteElement.innerHTML = validationInputMessage;
+    alerteElement.style.color = 'white';
+    input.style.border = 'none';
+}
+
+// 
+// Verification on submission click
+// 
+
+// Verify input elements on submission click event
+submitBtn.addEventListener('click', inputVerificationAll);
+  
+// Verify all inputs form
+function inputVerificationAll(event) {
+    inputVerification(event, alerteFirst, first, verificationMessages.charInputSize);
+    inputVerification(event, alerteLast, last, verificationMessages.charInputSize);
+    inputVerification(event, alerteEmail, email, verificationMessages.inputEmail);
+    inputVerification(event, alerteMessage, message, verificationMessages.charInputSize);
+}
+
+// Verify an input form
+function inputVerification(event, alerteElement, input, message){
+    if(alerteElement.textContent != validationInputMessage){
+        event.preventDefault();
+        // alert("Veuillez compléter tous les champs.");
+        erreurInput(alerteElement, message, input );
+    } 
+}
+
+// 
+// Code for layout display
+// 
+
+// Gérer la fonction pour que criteria s'adapte en fonction du sortCriteria
+function sorting(table, sortCriteria) {
+    let x = sortCriteria == "titre" ? 1 : -1;
+    let y = sortCriteria == "titre" ? -1 : 1;
+    let criteria = "likes";
+    if(sortCriteria == "date") {
+        criteria = "date";
+    } else if(sortCriteria == "titre") {
+        criteria = "title";
+    }
+    return table.sort((a, b) => (a[criteria] > b[criteria]) ? x : y);
+};
 
 function eventHandler(sortCriteria = "popularite") {
     import('../content.json')
@@ -75,14 +175,6 @@ function eventHandler(sortCriteria = "popularite") {
         const photographer = ns.photographers.find(photographer => photographer.id == id);
 
         modalHeader.innerHTML = "Contactez-moi<br>"+photographer.name;
-
-        // Section Photographer
-        // let portraitAttributes = {
-        //     "src": "./images/Photographers ID Photos/"+photographer.portrait, 
-        //     class: "portrait-img"
-        // };
-
-        // let portrait = createMedia("img", portraitAttributes);
 
         let portraitContainer = document.createElement("div");
         portraitContainer.className = "portrait-container";
@@ -146,17 +238,6 @@ function eventHandler(sortCriteria = "popularite") {
             artistTagsList.appendChild(tagLink);
         });
 
-        let heartAttributes = {
-            "aria-label": "likes", 
-            class: "fa fa-heart"
-        };
-        
-        let heart1 = createMedia("i", heartAttributes);
-
-        let photographerLikes = document.createElement("div"); 
-
-        let photographerLikesNumber = 0;
-
         sectionProfile.appendChild(portraitContainer);
         sectionProfile.appendChild(contactDiv);
 
@@ -183,44 +264,26 @@ function eventHandler(sortCriteria = "popularite") {
         }
 
         var response = ns.media;
-        console.log(response);
         let arrayMedia = [];
         response.forEach(media => {
             if (media.photographerId == id) {
-                // arrayMedia.push(media.image || media.video);
                 arrayMedia.push(media)
             }
         });
 
-        if (sortCriteria == "popularite") {
-            arrayMedia.sort((a, b) => (a.likes > b.likes) ? -1 : 1);
-            console.log(sortCriteria);
-        } else if (sortCriteria == "date") {
-            arrayMedia.sort((a, b) => (a.date > b.date) ? -1 : 1);
-            console.log(sortCriteria);
-        } else if (sortCriteria == "titre") {
-            arrayMedia.sort((a, b) => (a.title > b.title) ? 1 : -1);
-            console.log(sortCriteria);
-        }
+        arrayMedia = sorting(arrayMedia, sortCriteria)
 
-        console.log(arrayMedia);
         arrayMedia.forEach(mediaPhotographer => {            
             
             let mediaCard = document.createElement("div");
             mediaCard.className = "media-card";
-
-            // let mediaDivLinkAttributes = {
-            //     "href": "./images/"+photographerSurname+"/"+mediaPhotographer.image, 
-            //     class: "card-artists-link"
-            // };
-    
-            // let mediaDivLink = createMedia("a", mediaDivLinkAttributes);
 
             let mediaDiv = document.createElement("div");
             mediaDiv.className = "image-container";
 
             mediaDiv.addEventListener("click", function() {
                 let mediaIndex = (arrayMedia.findIndex(element => element == mediaPhotographer))
+                dialog.style.display = 'flex';
                 dialog.showModal();
 
                 defineDialogImg()
@@ -250,22 +313,16 @@ function eventHandler(sortCriteria = "popularite") {
                 })
 
             })            
-            
-            photographerLikesNumber += mediaPhotographer.likes;
 
             mediaContenant.appendChild(mediaCard);
             if (mediaPhotographer.image) {
 
-                // let imgAttributes = {
-                //     "src": "./images/"+photographerSurname+"/"+mediaPhotographer.image, 
-                //     class: "photographer-image"
-                // };
-
-                // let photo = createMedia("img", imgAttributes);
-
                 let background = "./images/"+photographerSurname+"/"+mediaPhotographer.image;
                 
-                mediaDiv.setAttribute("style", `background-image: url(${background.replace(" ","%20")})`);
+                console.log(mediaCard)
+                let width = mediaCard.clientWidth;
+                let height = width;
+                mediaDiv.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`);
             } else if (mediaPhotographer.video) {
 
                 let videoSourceAttributes = {
@@ -299,20 +356,45 @@ function eventHandler(sortCriteria = "popularite") {
             let heart2 = createMedia("i", heartAttributes);
 
             mediaCard.appendChild(mediaDiv);
-            // mediaDivLink.appendChild(mediaDiv);
             mediaCard.appendChild(bannerMedia);
             bannerMedia.appendChild(title);
             bannerMedia.appendChild(likes);
             likes.appendChild(heart2);
 
-            for (let i = 0; i < document.getElementsByClassName("image-container").length; i++) {
-                const element = document.getElementsByClassName("image-container")[i];
-                let width = document.querySelector(".media-card").clientWidth;
-                let height = width; 
-                let style = element.getAttribute("style");            
-                element.setAttribute("style", `${style}; width: ${width}px; height: ${height}px`);  
+            // for (let i = 0; i < document.getElementsByClassName("image-container").length; i++) {
+            //     const element = document.getElementsByClassName("image-container")[i];
+            //     let width = document.querySelector(".media-card").clientWidth;
+            //     let height = width; 
+            //     let style = element.getAttribute("style");            
+                // element.setAttribute("style", `${style}; width: ${width}px; height: ${height}px`);  
+            // }
+        });
+    })
+    .catch((error) => {
+        console.log("erreur survenue", error);
+    })
+}
+
+function belowElements () {
+    import('../content.json')
+    .then((ns) => {        
+        const photographer = ns.photographers.find(photographer => photographer.id == id);
+        console.log(photographer);
+        let heart1 = createMedia("i", heartAttributes);
+        let photographerLikes = document.createElement("div"); 
+        let photographerLikesNumber = 0;
+        var response = ns.media;
+        let arrayMedia = [];
+        response.forEach(media => {
+            if (media.photographerId == id) {
+                arrayMedia.push(media)
             }
         });
+      
+        arrayMedia.forEach(mediaPhotographer => {
+            photographerLikesNumber += mediaPhotographer.likes;
+        })
+        console.log(arrayMedia)
         photographerLikes.innerHTML = photographerLikesNumber+" ";
 
         let photographerPrice = document.createElement("div");
@@ -323,11 +405,12 @@ function eventHandler(sortCriteria = "popularite") {
         photographerBelowElements.appendChild(photographerPrice);
     })
     .catch((error) => {
-        console.log("erreur survenue");
+        console.log("erreur survenue dans belowElements");
     })
 }
 
 eventHandler();
+belowElements();
 
 orderBy.addEventListener("change", function (event) {
     eventHandler(event.target.value);
