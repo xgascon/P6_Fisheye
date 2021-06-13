@@ -3,16 +3,33 @@ $color-site-2: #D3573C;
 $color-site-3: #FAFAFA;
 $color-site-4: #525252;
 
+$breakpoints: (
+    medium-screen: 1399px,
+    small-screen: 767px,
+);
+
 :root {
     --modal-duration: 0.8s;
 }
 
 @keyframes modalopen {
     from {
-      opacity: 0;
-      transform: translateY(-150px);
+        opacity: 0;
+        transform: translateY(-150px);
     }
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
+}
+
+@mixin small-screen {
+    @media all and (max-width: map-get($breakpoints, small-screen)) {
+        @content;
+    }
+}
+
+@mixin medium-screen {
+    @media all and (max-width: map-get($breakpoints, medium-screen)) {
+        @content;
+    }
+}

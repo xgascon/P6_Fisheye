@@ -17,7 +17,10 @@ const dialogClose = document.getElementById('dialog-close');
 const titleDialog = document.getElementById('title-dialog');
 const dialogPrevious = document.getElementById('dialog-previous');
 const dialogNext = document.getElementById('dialog-next');
-const orderBy = document.querySelector(".order-by");
+const orderByTrigger = document.getElementById('order-by-trigger');
+const orderByTriggerText = document.getElementById('order-by-trigger-text');
+const orderByDropdown = document.getElementById('order-by-dropdown');
+const orderByDropdownElement = document.querySelectorAll('.order-by-dropdown-element');
 const first = document.getElementById('first');
 const last = document.getElementById('last');
 const email = document.getElementById('email');
@@ -195,12 +198,13 @@ function eventHandler(sortCriteria = "popularite") {
         contactDiv.className = "contact-div";
 
         let contactButtonDiv = document.createElement("div");
+        contactButtonDiv.className = "contact-div-button";
 
         let contactText = document.createElement("div");
         contactText.className = "contact-text";
 
         let contactHeaderAttributes = {
-            class: "artist-name"
+            class: "artist-name artist-name-contact"
         }
 
         let contactHeader = createMedia("h1", contactHeaderAttributes);
@@ -276,7 +280,7 @@ function eventHandler(sortCriteria = "popularite") {
         arrayMedia.forEach(mediaPhotographer => {            
             
             let mediaCard = document.createElement("div");
-            mediaCard.className = "media-card";
+            mediaCard.className = "media-card media-card-photographer";
 
             let mediaDiv = document.createElement("div");
             mediaDiv.className = "image-container";
@@ -319,7 +323,6 @@ function eventHandler(sortCriteria = "popularite") {
 
                 let background = "./images/"+photographerSurname+"/"+mediaPhotographer.image;
                 
-                console.log(mediaCard)
                 let width = mediaCard.clientWidth;
                 let height = width;
                 mediaDiv.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`);
@@ -338,11 +341,15 @@ function eventHandler(sortCriteria = "popularite") {
                     class: "photographer-image"
                 };
 
+                let width = mediaCard.clientWidth;
+                let height = width;
+
                 let video = createMedia("video", videoAttributes);
 
                 video.appendChild(videoSource);
 
                 mediaDiv.appendChild(video);
+                video.setAttribute("style", `width: ${width}px; height: ${height}px`);
             }
             let bannerMedia = document.createElement("div");
             bannerMedia.className = "banner-media";
@@ -412,9 +419,24 @@ function belowElements () {
 eventHandler();
 belowElements();
 
-orderBy.addEventListener("change", function (event) {
-    eventHandler(event.target.value);
+// orderBy.addEventListener("change", function (event) {
+//     eventHandler(event.target.value);
+// });
+
+orderByTrigger.addEventListener("click", function () {
+    orderByTrigger.style.display = 'none';
+    orderByDropdown.style.display = 'block';
 });
+
+orderByDropdownElement.forEach((btn) => {
+    btn.addEventListener("click", function () {
+        eventHandler(btn.value)
+        orderByTriggerText.innerText = btn.innerText;
+        orderByDropdown.style.display = 'none';
+        orderByTrigger.style.display = 'block';
+    })    
+});
+
 
 function createMedia (tagName, attributes) {
     let tag = document.createElement(tagName);

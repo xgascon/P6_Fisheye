@@ -10,16 +10,6 @@
   font-family: "OpenLight";
   src: url("../fonts/Open/OpenSans-Light.ttf");
 }
-body {
-  font-family: "Open";
-  font-size: 1.5em;
-  scroll-behavior: smooth;
-}
-
-a {
-  text-decoration: none;
-}
-
 :root {
   --modal-duration: 0.8s;
 }
@@ -36,8 +26,15 @@ a {
 .homepage-header {
   display: flex;
   position: absolute;
-  width: 75%;
   z-index: 1;
+  margin-top: 1em;
+  left: 0;
+  width: 100%;
+}
+@media all and (max-width: 1399px) {
+  .homepage-header {
+    flex-direction: column;
+  }
 }
 
 .homepage-main {
@@ -60,28 +57,43 @@ a {
   border-radius: 0.2em;
   position: fixed;
   top: 0.5em;
-  right: 50%;
-  left: 50%;
+  color: black;
 }
 .main-navbar-list {
   list-style-type: none;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
+  flex-wrap: wrap;
+  padding-inline-start: 0;
 }
 .main-navbar-list li {
   border: #FAFAFA solid 2px;
   border-radius: 1em;
   padding: 0em 0.3em 0em 0.3em;
-  font-size: medium;
 }
 .main-navbar-list li a {
   color: #901C1C !important;
+  font-size: medium;
+}
+@media all and (max-width: 1399px) {
+  .main-navbar-list li a {
+    font-size: 0.9em;
+  }
+}
+@media all and (max-width: 767px) {
+  .main-navbar-list li a {
+    padding-inline-start: 0;
+    font-size: 0.8em;
+  }
 }
 
 .header-logo {
   margin-top: auto;
   justify-content: center;
+  width: fit-content;
+  margin-right: 2em;
+  margin-left: 0.8em;
 }
 
 select option[value=date] {
@@ -108,15 +120,30 @@ select option[value=date]::after {
   position: relative;
   top: 2em;
   display: grid;
-  grid-template-columns: repeat(3, 30%);
-  grid-gap: 4em;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em;
   grid-auto-rows: minmax(100px, auto);
+}
+@media all and (max-width: 1399px) {
+  .media-contenant {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media all and (max-width: 767px) {
+  .media-contenant {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .media-card {
   display: block;
   flex-direction: column;
   align-items: center;
+}
+.media-card-photographer {
+  width: 18em;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .banner-media {
@@ -136,6 +163,12 @@ select option[value=date]::after {
   background-repeat: no-repeat;
   background-position: center center;
 }
+@media all and (max-width: 767px) {
+  .portrait-container {
+    width: 8em;
+    height: 8em;
+  }
+}
 
 .contact-button {
   color: white;
@@ -148,21 +181,67 @@ select option[value=date]::after {
   cursor: pointer;
 }
 
+body {
+  font-family: "Open";
+  font-size: 1.5em;
+  scroll-behavior: smooth;
+}
+@media all and (max-width: 767px) {
+  body {
+    font-size: 1em;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
 .title {
   font-family: "OpenLight";
   position: absolute;
   right: 1em;
-  width: 25%;
+  width: fit-content;
   color: #901C1C;
+}
+@media all and (max-width: 1399px) {
+  .title {
+    margin-block-start: 0.4em;
+  }
+}
+@media all and (max-width: 767px) {
+  .title {
+    font-size: 1em;
+    margin-top: 1.5em;
+  }
+}
+
+.logo {
+  width: 9em;
+}
+@media all and (max-width: 767px) {
+  .logo {
+    width: 8em;
+  }
 }
 
 .section-artists {
   position: relative;
-  top: 6em;
+  top: 8em;
+  margin: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
+}
+@media all and (max-width: 1399px) {
+  .section-artists {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media all and (max-width: 767px) {
+  .section-artists {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .card-artists {
@@ -177,6 +256,11 @@ select option[value=date]::after {
   margin-top: 0.1em;
   margin-bottom: 0.1em;
 }
+@media all and (max-width: 767px) {
+  .card-artists p {
+    line-height: initial;
+  }
+}
 .card-artists-link {
   display: flex;
   flex-direction: column;
@@ -187,6 +271,11 @@ select option[value=date]::after {
   color: #D3573C;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
+  text-align: center;
+}
+
+.artist-name-contact {
+  text-align: start;
 }
 
 .artist-location {
@@ -208,12 +297,19 @@ select option[value=date]::after {
   padding: 0;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
+  justify-content: flex-start;
 }
 
 .photographer-main {
   margin-left: 2em;
   margin-right: 2em;
   margin-bottom: 5em;
+}
+@media all and (max-width: 767px) {
+  .photographer-main {
+    margin-left: 0.1em;
+    margin-right: 0.1em;
+  }
 }
 
 .photographer-image {
@@ -239,14 +335,33 @@ select option[value=date]::after {
   justify-content: space-between;
   background-color: #FAFAFA;
 }
+@media all and (max-width: 767px) {
+  .photographer-section-contact {
+    padding: 1em 1em 0.5em 1em;
+  }
+}
 
 .contact-div {
   display: flex;
   flex-direction: row-reverse;
 }
+@media all and (max-width: 1399px) {
+  .contact-div-button {
+    position: fixed;
+    bottom: 10%;
+    left: calc(50% - 80px);
+    width: 160px;
+    z-index: 1;
+  }
+}
 
 .contact-text {
   margin-right: 2em;
+}
+@media all and (max-width: 767px) {
+  .contact-text {
+    margin-right: 0em;
+  }
 }
 
 .photographer-belowElements {
@@ -260,6 +375,11 @@ select option[value=date]::after {
   border-radius: 0.3em;
   font-weight: bold;
   width: 12em;
+}
+@media all and (max-width: 1399px) {
+  .photographer-belowElements {
+    display: none;
+  }
 }
 
 .modal-initial {
@@ -326,13 +446,36 @@ select option[value=date]::after {
   margin-bottom: 0.7em;
 }
 
+.order {
+  display: flex;
+  flex-direction: row;
+  height: 2em;
+}
+
 .order-by {
   color: white;
   background-color: #901C1C;
-  font-size: 20px;
   padding: 0.5em;
   border-color: #901C1C;
   border-radius: 0.3em;
+  width: fit-content;
+  height: fit-content;
+  margin-left: 0.5em;
+  z-index: 1;
+}
+
+.order-by-dropdown {
+  display: none;
+}
+
+.order-by-element {
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  width: 100%;
+  text-align: start;
 }
 
 .dialog {
