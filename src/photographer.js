@@ -349,7 +349,7 @@ function eventHandler(sortCriteria = "popularite") {
                 video.appendChild(videoSource);
 
                 mediaDiv.appendChild(video);
-                video.setAttribute("style", `width: ${width}px; height: ${height}px`);
+                video.setAttribute("style", `background: black ; width: ${width}px; height: ${height}px`);
             }
             let bannerMedia = document.createElement("div");
             bannerMedia.className = "banner-media";
