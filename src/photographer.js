@@ -4,7 +4,6 @@ const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
 
 const sectionProfile = document.querySelector(".photographer-section-contact");
-const sectionMedia = document.querySelector(".section-media");
 const mediaContenant = document.getElementById("media-contenant");
 const modalHeader = document.getElementById("modal-header");
 const photographerBelowElements = document.querySelector(".photographer-belowElements");
@@ -12,7 +11,6 @@ const modalInitial = document.getElementById("modal-initial");
 const modalClose = document.getElementById("modal-header-close");
 const dialog = document.getElementById('dialog');
 const dialogImgContainer = document.getElementById('dialog-img-container');
-const dialogBannerMedia = document.getElementById('dialog-banner-media');
 const dialogClose = document.getElementById('dialog-close');
 const titleDialog = document.getElementById('title-dialog');
 const dialogPrevious = document.getElementById('dialog-previous');
@@ -67,7 +65,7 @@ dialogClose.addEventListener("click", function() {
 // 
 
 // RegEx to verify email input 
-var emailRegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+var emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 // 
 // Verification inputs on change of their data events
@@ -165,7 +163,7 @@ function sorting(table, sortCriteria) {
         criteria = "title";
     }
     return table.sort((a, b) => (a[criteria] > b[criteria]) ? x : y);
-};
+}
 
 function eventHandler(sortCriteria = "popularite") {
     import('../content.json')
@@ -260,9 +258,8 @@ function eventHandler(sortCriteria = "popularite") {
 
         if(photographerSurname.split('-').length > 1) {
             let nameBitsAssembled = photographerSurname.split('-')[0];
-            for (i = 1; i <= photographerSurname.split('-').length-1; i++) {
-                nameBits = " "+photographerSurname.split('-')[i];
-                nameBitsAssembled += nameBits;
+            for (var i = 1; i <= photographerSurname.split('-').length-1; i++) {
+                nameBitsAssembled += " "+photographerSurname.split('-')[i];
             }
             photographerSurname = nameBitsAssembled;
         }
@@ -290,11 +287,36 @@ function eventHandler(sortCriteria = "popularite") {
                 dialog.style.display = 'flex';
                 dialog.showModal();
 
-                defineDialogImg()
+                defineDialogMedia()
 
-                function defineDialogImg() {
-                    let backgroundDialog = "./images/"+photographerSurname+"/"+arrayMedia[mediaIndex].image;
-                    dialogImgContainer.setAttribute("style", `background-image: url(${backgroundDialog.replace(" ", "%20")}); width: 25em; height: 25em`);
+                function defineDialogMedia() {
+                    if (arrayMedia[mediaIndex].image) {
+                        if (dialogImgContainer.firstElementChild) {
+                            dialogImgContainer.removeChild(dialogImgContainer.firstElementChild);
+                        }
+                        let backgroundDialog = "./images/"+photographerSurname+"/"+arrayMedia[mediaIndex].image;
+                        dialogImgContainer.setAttribute("style", `background-image: url(${backgroundDialog.replace(" ", "%20")}); width: 25em; height: 25em`);
+                    } else if (arrayMedia[mediaIndex].video) {
+                        let videoSourceAttributes = {
+                            "src": "./images/"+photographerSurname+"/"+arrayMedia[mediaIndex].video, 
+                            "type": "video/mp4",
+                        };
+        
+                        let videoSource = createMedia("source", videoSourceAttributes);
+        
+                        let videoAttributes = {
+                            "preload": "auto", 
+                            "controls": true,
+                            class: "photographer-image"
+                        };
+                        let video = createMedia("video", videoAttributes);
+                        video.setAttribute("style", `background: black; width: 25em; height: 25em`);
+
+                        video.appendChild(videoSource);
+
+                        dialogImgContainer.appendChild(video);
+                        
+                    }
                     titleDialog.innerHTML = arrayMedia[mediaIndex].title;
                 }            
 
@@ -304,7 +326,7 @@ function eventHandler(sortCriteria = "popularite") {
                     } else {
                         mediaIndex--;
                     } 
-                    defineDialogImg();
+                    defineDialogMedia();
                 })
 
                 dialogNext.addEventListener("click", function() {
@@ -313,7 +335,7 @@ function eventHandler(sortCriteria = "popularite") {
                     } else {
                         mediaIndex++;
                     }                    
-                    defineDialogImg();
+                    defineDialogMedia();
                 })
 
             })            
@@ -367,14 +389,6 @@ function eventHandler(sortCriteria = "popularite") {
             bannerMedia.appendChild(title);
             bannerMedia.appendChild(likes);
             likes.appendChild(heart2);
-
-            // for (let i = 0; i < document.getElementsByClassName("image-container").length; i++) {
-            //     const element = document.getElementsByClassName("image-container")[i];
-            //     let width = document.querySelector(".media-card").clientWidth;
-            //     let height = width; 
-            //     let style = element.getAttribute("style");            
-                // element.setAttribute("style", `${style}; width: ${width}px; height: ${height}px`);  
-            // }
         });
     })
     .catch((error) => {
@@ -412,16 +426,12 @@ function belowElements () {
         photographerBelowElements.appendChild(photographerPrice);
     })
     .catch((error) => {
-        console.log("erreur survenue dans belowElements");
+        console.log("erreur survenue dans belowElements"+error);
     })
 }
 
 eventHandler();
 belowElements();
-
-// orderBy.addEventListener("change", function (event) {
-//     eventHandler(event.target.value);
-// });
 
 orderByTrigger.addEventListener("click", function () {
     orderByTrigger.style.display = 'none';
@@ -437,11 +447,10 @@ orderByDropdownElement.forEach((btn) => {
     })    
 });
 
-
 function createMedia (tagName, attributes) {
     let tag = document.createElement(tagName);
     for (const attribute in attributes) {
         tag.setAttribute(attribute, attributes[attribute])
-    };
+    }
     return tag;
 }

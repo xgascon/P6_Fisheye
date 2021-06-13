@@ -3,12 +3,10 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const tag = urlParams.get('tag');
 
-const sectionMedia = document.querySelector(".section-media");
 const mediaContenant = document.getElementById("media-contenant") ;
 const orderBy = document.querySelector(".order-by");
 const dialog = document.getElementById('dialog');
 const dialogImgContainer = document.getElementById('dialog-img-container');
-const dialogBannerMedia = document.getElementById('dialog-banner-media');
 const dialogClose = document.getElementById('dialog-close');
 const titleDialog = document.getElementById('title-dialog');
 const dialogPrevious = document.getElementById('dialog-previous');
@@ -30,7 +28,7 @@ function sorting(table, sortCriteria) {
         criteria = "title";
     }
     return table.sort((a, b) => (a[criteria] > b[criteria]) ? x : y);
-};
+}
 
 function eventHandler(sortCriteria = "popularite") {
     import('../content.json')
@@ -162,7 +160,7 @@ function eventHandler(sortCriteria = "popularite") {
         })
     })
     .catch((error) => {
-        console.log("erreur survenue");
+        console.log("erreur survenue"+error);
     })
 }
 
@@ -176,6 +174,6 @@ function createMedia (tagName, attributes) {
     let tag = document.createElement(tagName);
     for ( const attribute in attributes) {
         tag.setAttribute(attribute, attributes[attribute])
-    };
+    }
     return tag;
 }

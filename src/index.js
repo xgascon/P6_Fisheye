@@ -2,15 +2,17 @@
 const sectionArtists = document.querySelector(".section-artists");
 const mainNavbarRedirection = document.querySelector(".main-navbar-redirection")
 
-$(function () {
-  $(window).on('scroll', function () {
-      if ( $(window).scrollTop() > 10 ) {
+function navBarScroll () {
+  window.addEventListener('scroll', function () {
+      if ( document.documentElement.scrollTop > 10 ) {
         mainNavbarRedirection.style.display = 'block';
       } else {
         mainNavbarRedirection.style.display = 'none';
       }
   });
-});
+}
+
+navBarScroll();
 
 function eventHandler() {
     import('../content.json')
@@ -74,7 +76,7 @@ function eventHandler() {
         })
     })
     .catch((error) => {
-      console.log("erreur survenue");
+      console.log("erreur survenue"+error);
     });
 }
 // L'appel à la fonction
