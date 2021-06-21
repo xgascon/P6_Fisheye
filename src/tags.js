@@ -68,11 +68,15 @@ function eventHandler(sortCriteria = "popularite") {
 
             mediaContenant.appendChild(mediaCard);
 
+            let mediaLink = document.createElement("a");
+
             let mediaDiv = document.createElement("div");
             mediaDiv.setAttribute("aria-label", elt.title);
             mediaDiv.className = "image-container";
 
-            mediaDiv.addEventListener("click", function() {
+            mediaLink.appendChild(mediaDiv);
+
+            mediaLink.addEventListener("click", function() {
                 let mediaIndex = (mediaTag.findIndex(element => element == elt))
                 dialog.style.display = 'flex';
                 dialog.showModal();
@@ -193,7 +197,7 @@ function eventHandler(sortCriteria = "popularite") {
             
             let heart = createMedia("i", heartAttributes);
             
-            mediaCard.appendChild(mediaDiv);
+            mediaCard.appendChild(mediaLink);
             mediaCard.appendChild(bannerMedia);
             bannerMedia.appendChild(title);
             bannerMedia.appendChild(likes);
