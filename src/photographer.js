@@ -181,6 +181,7 @@ function eventHandler(sortCriteria = "popularite") {
         portraitContainer.className = "portrait-container";
         let backgroundPortrait = "./images/Photographers%20ID%20Photos/"+photographer.portrait;
         portraitContainer.setAttribute("style", `background-image: url(${backgroundPortrait.replace(" ","%20")})`);
+        portraitContainer.setAttribute("aria-label", photographer.name);
 
         let contactButtonAttributes = {
             class: "contact-button"
@@ -188,8 +189,10 @@ function eventHandler(sortCriteria = "popularite") {
 
         let contactButton = createMedia("button", contactButtonAttributes);
         contactButton.innerHTML = "Contactez-moi";
+        contactButton.setAttribute("aria-label", "Contactez-moi");
         contactButton.addEventListener("click", function () {
             launchModal(modalInitial)
+            modalInitial.setAttribute("aria-labelledby", "modal-header")
         });
 
         let contactDiv = document.createElement("div");
@@ -230,11 +233,16 @@ function eventHandler(sortCriteria = "popularite") {
 
         let contactTags = createMedia("ul", contactTagsAttributes);
         photographer.tags.forEach(tag => {
+            let tagName = tag;
+            if(tag === "sports") {
+              tagName = "sport";
+            }
             let artistTagsList = document.createElement("li");
 
             let tagLink = document.createElement("a");
-            tagLink.setAttribute("href", "tags.html?tag="+tag);
-            tagLink.innerHTML = "#"+tag;
+            tagLink.setAttribute("href", "tags.html?tag="+tagName);
+            tagLink.setAttribute("aria-label", tagName);
+            tagLink.innerHTML = "#"+tagName;
 
             contactTags.appendChild(artistTagsList); 
             artistTagsList.appendChild(tagLink);
@@ -277,9 +285,10 @@ function eventHandler(sortCriteria = "popularite") {
         arrayMedia.forEach(mediaPhotographer => {            
             
             let mediaCard = document.createElement("div");
-            mediaCard.className = "media-card media-card-photographer";
+            mediaCard.className = "media-card media-card-page-display";
 
             let mediaDiv = document.createElement("div");
+            mediaDiv.setAttribute("aria-label", mediaPhotographer.title);
             mediaDiv.className = "image-container";
 
             mediaDiv.addEventListener("click", function() {
@@ -296,6 +305,7 @@ function eventHandler(sortCriteria = "popularite") {
                         }
                         let backgroundDialog = "./images/"+photographerSurname+"/"+arrayMedia[mediaIndex].image;
                         dialogImgContainer.setAttribute("style", `background-image: url(${backgroundDialog.replace(" ", "%20")}); width: 25em; height: 25em`);
+                        dialogImgContainer.setAttribute("aria-label", arrayMedia[mediaIndex].title);
                     } else if (arrayMedia[mediaIndex].video) {
                         let videoSourceAttributes = {
                             "src": "./images/"+photographerSurname+"/"+arrayMedia[mediaIndex].video, 
@@ -311,9 +321,9 @@ function eventHandler(sortCriteria = "popularite") {
                         };
                         let video = createMedia("video", videoAttributes);
                         video.setAttribute("style", `background: black; width: 25em; height: 25em`);
-
                         video.appendChild(videoSource);
 
+                        dialogImgContainer.setAttribute("aria-label", arrayMedia[mediaIndex].title);
                         dialogImgContainer.appendChild(video);
                         
                     }
@@ -341,13 +351,19 @@ function eventHandler(sortCriteria = "popularite") {
             })            
 
             mediaContenant.appendChild(mediaCard);
+
+            let width = mediaCard.clientWidth;
+            let height = width;
+
             if (mediaPhotographer.image) {
 
                 let background = "./images/"+photographerSurname+"/"+mediaPhotographer.image;
-                
-                let width = mediaCard.clientWidth;
-                let height = width;
                 mediaDiv.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`);
+                window.addEventListener("resize", function () {
+                    width = mediaCard.clientWidth;
+                    height = width;
+                    mediaDiv.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`)                  
+                });
             } else if (mediaPhotographer.video) {
 
                 let videoSourceAttributes = {
@@ -363,8 +379,11 @@ function eventHandler(sortCriteria = "popularite") {
                     class: "photographer-image"
                 };
 
-                let width = mediaCard.clientWidth;
-                let height = width;
+                window.addEventListener("resize", function () {
+                    width = mediaCard.clientWidth;
+                    height = width;
+                    video.setAttribute("style", `background: black; width: ${width}px; height: ${height}px`)                  
+                });
 
                 let video = createMedia("video", videoAttributes);
 
@@ -389,6 +408,7 @@ function eventHandler(sortCriteria = "popularite") {
             bannerMedia.appendChild(title);
             bannerMedia.appendChild(likes);
             likes.appendChild(heart2);
+
         });
     })
     .catch((error) => {

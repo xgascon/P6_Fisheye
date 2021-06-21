@@ -140,7 +140,7 @@ select option[value=date]::after {
   flex-direction: column;
   align-items: center;
 }
-.media-card-photographer {
+.media-card-page-display {
   width: 18em;
   margin-left: auto;
   margin-right: auto;

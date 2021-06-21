@@ -21,6 +21,7 @@ function eventHandler() {
         console.log(response);
         response.forEach(artist => {
           let card = document.createElement("div");
+          card.setAttribute("aria-label", artist.name);
           card.className = "card-artists";
 
           let link = document.createElement("a");
@@ -54,11 +55,16 @@ function eventHandler() {
           artistTags.className = "main-navbar-list artist-tags";
 
           artist.tags.forEach(tag => {
+            let tagName = tag;
+            if(tag === "sports") {
+              tagName = "sport";
+            }
             let artistTagsList = document.createElement("li");
 
             let tagLink = document.createElement("a");
-            tagLink.setAttribute("href", "tags.html?tag="+tag);
-            tagLink.innerHTML = "#"+tag;
+            tagLink.setAttribute("href", "tags.html?tag="+tagName);
+            tagLink.setAttribute("aria-label", tagName);
+            tagLink.innerHTML = "#"+tagName;
 
             artistTags.appendChild(artistTagsList); 
             artistTagsList.appendChild(tagLink);
