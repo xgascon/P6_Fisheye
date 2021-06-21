@@ -69,6 +69,7 @@ function eventHandler(sortCriteria = "popularite") {
             mediaContenant.appendChild(mediaCard);
 
             let mediaLink = document.createElement("a");
+            mediaLink.setAttribute("href", "#dialog");
 
             let mediaDiv = document.createElement("div");
             mediaDiv.setAttribute("aria-label", elt.title);
