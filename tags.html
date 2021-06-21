@@ -22,8 +22,8 @@
       <div>
 
         <div class="order">
-          Trier par
-          <div class="order-by">
+          <span id="orderTitle">Trier par</span>
+          <div class="order-by" aria-labelledby="orderTitle" role="sort">
             <button id="order-by-trigger" class="order-by-element"> <span id="order-by-trigger-text">Popularité</span> <i class="fa fa-chevron-down"></i></button> 
             <div id="order-by-dropdown" class="order-by-dropdown">
               <button class="order-by-element order-by-dropdown-element" value="popularite"> Popularité <i class="fa fa-chevron-up"></i></button>
@@ -42,22 +42,22 @@
         </section>
       </div>
 
-      <dialog id="dialog" class="dialog">
+      <dialog id="dialog" class="dialog" aria-label="image vue rapprochée">
         <button id="dialog-previous" class="dialog-arrow-left">
           <i class="fa fa-chevron-left"></i>
         </button>
         <div class="media-card">
-          <div id="dialog-img-container" class="image-container">
+          <div id="dialog-img-container" class="image-container" aria-label="Previous image">
           </div>
           <div id="dialog-banner-media" class="banner-media">
             <h3 id="title-dialog"></h3>
           </div>
         </div>   
         <div class="dialog-right">
-          <button id="dialog-next" class="dialog-arrow-right">
+          <button id="dialog-next" class="dialog-arrow-right" aria-label="Next image">
             <i class="fa fa-chevron-right"></i>
           </button>
-          <button id="dialog-close" class="dialog-close">
+          <button id="dialog-close" class="dialog-close" aria-label="Close dialog">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
         </div>

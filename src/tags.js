@@ -69,6 +69,7 @@ function eventHandler(sortCriteria = "popularite") {
             mediaContenant.appendChild(mediaCard);
 
             let mediaDiv = document.createElement("div");
+            mediaDiv.setAttribute("aria-label", elt.title);
             mediaDiv.className = "image-container";
 
             mediaDiv.addEventListener("click", function() {
@@ -85,7 +86,7 @@ function eventHandler(sortCriteria = "popularite") {
                         }
                         let backgroundDialog = mediaTag[mediaIndex].mediaPath;
                         dialogImgContainer.setAttribute("style", `background-image: url(${backgroundDialog.replace(" ", "%20")}); width: 25em; height: 25em`);
-                    
+                        dialogImgContainer.setAttribute("aria-label", mediaTag[mediaIndex].title);
                     } else if (mediaTag[mediaIndex].video) {
                         let videoSourceAttributes = {
                             "src": mediaTag[mediaIndex].mediaPath, 
@@ -101,9 +102,10 @@ function eventHandler(sortCriteria = "popularite") {
                         };
                         let video = createMedia("video", videoAttributes);
                         video.setAttribute("style", `background: black; width: 25em; height: 25em`);
-
+                        
                         video.appendChild(videoSource);
 
+                        dialogImgContainer.setAttribute("aria-label", mediaTag[mediaIndex].title);
                         dialogImgContainer.appendChild(video);
                         
                     }
