@@ -331,8 +331,8 @@ a {
 }
 @media all and (max-width: 767px) {
   .image-container-dialog {
-    width: 15em;
-    height: 15em;
+    width: 13em;
+    height: 13em;
   }
 }
 
