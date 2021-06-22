@@ -325,6 +325,16 @@ a {
   background-position: center center;
   cursor: pointer;
 }
+.image-container-dialog {
+  width: 25em;
+  height: 25em;
+}
+@media all and (max-width: 767px) {
+  .image-container-dialog {
+    width: 15em;
+    height: 15em;
+  }
+}
 
 .photographer-section-contact {
   margin-top: 2em;

@@ -85,7 +85,7 @@ function eventHandler(sortCriteria = "popularite") {
                             dialogImgContainer.removeChild(dialogImgContainer.firstElementChild);
                         }
                         let backgroundDialog = mediaTag[mediaIndex].mediaPath;
-                        dialogImgContainer.setAttribute("style", `background-image: url(${backgroundDialog.replace(" ", "%20")}); width: 25em; height: 25em`);
+                        dialogImgContainer.setAttribute("style", `background-image: url(${backgroundDialog.replace(" ", "%20")});`);
                         dialogImgContainer.setAttribute("aria-label", mediaTag[mediaIndex].title);
                     } else if (mediaTag[mediaIndex].video) {
                         let videoSourceAttributes = {
@@ -101,7 +101,7 @@ function eventHandler(sortCriteria = "popularite") {
                             class: "photographer-image"
                         };
                         let video = createMedia("video", videoAttributes);
-                        video.setAttribute("style", `background: black; width: 25em; height: 25em`);
+                        video.setAttribute("style", `background: black;`);
                         
                         video.appendChild(videoSource);
 
