@@ -16,7 +16,7 @@ const orderByDropdown = document.getElementById('order-by-dropdown');
 const orderByDropdownElement = document.querySelectorAll('.order-by-dropdown-element');
 
 dialogClose.addEventListener("click", function() {
-    dialog.close();
+    // dialog.close();
     dialog.style.display = 'none';
 })
 
@@ -68,19 +68,14 @@ function eventHandler(sortCriteria = "popularite") {
 
             mediaContenant.appendChild(mediaCard);
 
-            let mediaBtn = document.createElement("button");
-            // mediaBtn.setAttribute("href", "#dialog");
-
             let mediaDiv = document.createElement("div");
             mediaDiv.setAttribute("aria-label", elt.title);
             mediaDiv.className = "image-container";
 
-            mediaBtn.appendChild(mediaDiv);
-
-            mediaBtn.addEventListener("click", function() {
+            mediaDiv.addEventListener("click", function() {
                 let mediaIndex = (mediaTag.findIndex(element => element == elt))
                 dialog.style.display = 'flex';
-                dialog.showModal();
+                // dialog.showModal();
 
                 defineDialogMedia()
 
@@ -198,7 +193,7 @@ function eventHandler(sortCriteria = "popularite") {
             
             let heart = createMedia("i", heartAttributes);
             
-            mediaCard.appendChild(mediaBtn);
+            mediaCard.appendChild(mediaDiv);
             mediaCard.appendChild(bannerMedia);
             bannerMedia.appendChild(title);
             bannerMedia.appendChild(likes);

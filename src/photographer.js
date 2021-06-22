@@ -56,7 +56,7 @@ modalClose.addEventListener("click", function() {
 })
 
 dialogClose.addEventListener("click", function() {
-    dialog.close();
+    // dialog.close();
     dialog.style.display = 'none';
 })
 
@@ -294,7 +294,7 @@ function eventHandler(sortCriteria = "popularite") {
             mediaDiv.addEventListener("click", function() {
                 let mediaIndex = (arrayMedia.findIndex(element => element == mediaPhotographer))
                 dialog.style.display = 'flex';
-                dialog.showModal();
+                // dialog.showModal();
 
                 defineDialogMedia()
 
