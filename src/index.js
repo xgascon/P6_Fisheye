@@ -1,6 +1,28 @@
 // Définition de constantes
 const sectionArtists = document.querySelector(".section-artists");
-const mainNavbarRedirection = document.querySelector(".main-navbar-redirection")
+const mainNavbarRedirection = document.querySelector(".main-navbar-redirection");
+const tagLink = document.querySelectorAll(".tagLink");
+
+// Récupération du tag d'après l'adresse URL
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const tagUrl = urlParams.get('tag');
+
+function tagClick () {
+  tagLink.forEach((btn) => { 
+    if(btn.innerText.toLowerCase() == "#"+tagUrl){
+      btn.classList.add("main-navbar-list-clicked");
+    } 
+    btn.addEventListener("click", function (event) {
+      if(btn.innerText.toLowerCase() == "#"+tagUrl){
+        event.preventDefault()
+        window.location="index.html"
+      }
+    })
+  })
+}
+
+tagClick();
 
 function navBarScroll () {
   window.addEventListener('scroll', function () {
@@ -14,12 +36,18 @@ function navBarScroll () {
 
 navBarScroll();
 
-function eventHandler() {
+function eventHandler(filterCriteria = tagUrl) {
     import('../content.json')
     .then((ns) => {
-        var response = ns.photographers;
-        console.log(response);
-        response.forEach(artist => {
+      var response = ns.photographers;
+      console.log(response);
+      response.forEach(artist => {
+        for(var j = 0 ; j < artist.tags.length ; j++){
+          if(artist.tags[j] == "sports"){
+            artist.tags[j] = "sport"
+          }
+        }
+        function createArtist () {
           let card = document.createElement("div");
           card.setAttribute("aria-label", artist.name);
           card.className = "card-artists";
@@ -56,9 +84,6 @@ function eventHandler() {
 
           artist.tags.forEach(tag => {
             let tagName = tag;
-            if(tag === "sports") {
-              tagName = "sport";
-            }
             let artistTagsList = document.createElement("li");
 
             let tagLink = document.createElement("a");
@@ -79,7 +104,17 @@ function eventHandler() {
           artistParagraph.appendChild(artistTagline);
           artistParagraph.appendChild(artistPrice);
           card.appendChild(artistTags);
-        })
+        }
+        if(filterCriteria !== null){
+          for(var i = 0 ; i < artist.tags.length ; i++){
+            if(artist.tags[i] == tagUrl){
+              createArtist();
+            }
+          }
+        } else if(filterCriteria === null) {
+          createArtist();
+        }
+      })
     })
     .catch((error) => {
       console.log("erreur survenue"+error);

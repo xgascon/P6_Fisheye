@@ -95,7 +95,7 @@ function alertInput(condition, alerteElement, input, message) {
 // Verification for inputs requiring 2 characters 
 function verificationCharInput(alerteElement, input) {
     let condition = input.value.substr(1) === '';
-    console.log(input.value)
+    // console.log(input.value)
     alertInput(condition, alerteElement, input, verificationMessages.charInputSize);
 }
   
@@ -129,7 +129,14 @@ function validationInput(alerteElement, input) {
 // 
 
 // Verify input elements on submission click event
-submitBtn.addEventListener('click', inputVerificationAll);
+submitBtn.addEventListener('click', function(event){
+    event.preventDefault();
+    console.log(first.value);
+    console.log(last.value);
+    console.log(email.value);
+    console.log(message.value);
+    inputVerificationAll;
+});
   
 // Verify all inputs form
 function inputVerificationAll(event) {
