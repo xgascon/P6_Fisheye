@@ -49,7 +49,7 @@ function eventHandler(filterCriteria = tagUrl) {
         }
         function createArtist () {
           let card = document.createElement("div");
-          card.setAttribute("aria-label", artist.name);
+          card.setAttribute("aria-label", "profil de "+artist.name);
           card.className = "card-artists";
 
           let link = document.createElement("a");
@@ -58,6 +58,7 @@ function eventHandler(filterCriteria = tagUrl) {
 
           let portraitContainer = document.createElement("div");
           portraitContainer.className = "portrait-container";
+          portraitContainer.setAttribute("aria-label", "portrait de "+artist.name);
           let backgroundPortrait = "./images/Photographers%20ID%20Photos/"+artist.portrait;
           portraitContainer.setAttribute("style", `background-image: url(${backgroundPortrait})`);
 

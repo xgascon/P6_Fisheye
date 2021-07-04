@@ -130,8 +130,10 @@ a {
 }
 
 .photographer-image {
-    width: auto;
-    height: 12em;
+    // width: auto;
+    // height: 12em;
+    width: inherit;
+    height: inherit;
     border-radius: 0.3em;
 }
 

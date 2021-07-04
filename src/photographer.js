@@ -57,7 +57,7 @@ modalClose.addEventListener("click", function() {
 
 dialogClose.addEventListener("click", function() {
     // dialog.close();
-    dialog.style.display = 'none';
+    closeModal(dialog)
 })
 
 // 
@@ -188,7 +188,7 @@ function eventHandler(sortCriteria = "popularite") {
         portraitContainer.className = "portrait-container";
         let backgroundPortrait = "./images/Photographers%20ID%20Photos/"+photographer.portrait;
         portraitContainer.setAttribute("style", `background-image: url(${backgroundPortrait.replace(" ","%20")})`);
-        portraitContainer.setAttribute("aria-label", photographer.name);
+        portraitContainer.setAttribute("aria-label", "portrait de "+photographer.name);
 
         let contactButtonAttributes = {
             class: "contact-button"
@@ -295,7 +295,7 @@ function eventHandler(sortCriteria = "popularite") {
             mediaCard.className = "media-card media-card-page-display";
 
             let mediaDiv = document.createElement("div");
-            mediaDiv.setAttribute("aria-label", mediaPhotographer.title);
+            mediaDiv.setAttribute("aria-label", "photo de "+mediaPhotographer.title);
             mediaDiv.className = "image-container";
 
             mediaDiv.addEventListener("click", function() {
@@ -312,8 +312,9 @@ function eventHandler(sortCriteria = "popularite") {
                         }
                         let backgroundDialog = "./images/"+photographerSurname+"/"+arrayMedia[mediaIndex].image;
                         dialogImgContainer.setAttribute("style", `background-image: url(${backgroundDialog.replace(" ", "%20")});`);
-                        dialogImgContainer.setAttribute("aria-label", arrayMedia[mediaIndex].title);
+                        dialogImgContainer.setAttribute("aria-label", "photo de "+arrayMedia[mediaIndex].title);
                     } else if (arrayMedia[mediaIndex].video) {
+                        dialogImgContainer.setAttribute("style", `background-image: none`);
                         let videoSourceAttributes = {
                             "src": "./images/"+photographerSurname+"/"+arrayMedia[mediaIndex].video, 
                             "type": "video/mp4",
@@ -335,24 +336,47 @@ function eventHandler(sortCriteria = "popularite") {
                         
                     }
                     titleDialog.innerHTML = arrayMedia[mediaIndex].title;
-                }            
-
-                dialogPrevious.addEventListener("click", function() {
+                }      
+                
+                function previousMedia () {
                     if(mediaIndex == 0) {
                         mediaIndex = arrayMedia.length-1
                     } else {
                         mediaIndex--;
                     } 
                     defineDialogMedia();
-                })
+                }
 
-                dialogNext.addEventListener("click", function() {
+                function nextMedia () {
                     if(mediaIndex == arrayMedia.length-1) {
                         mediaIndex = 0
                     } else {
                         mediaIndex++;
                     }                    
                     defineDialogMedia();
+                }
+
+                document.addEventListener("keydown", function(event) {
+                    // eslint-disable-next-line default-case
+                    switch(event.key) {
+                        case "ArrowRight":
+                            nextMedia();
+                            break;
+                        case "ArrowLeft":
+                            previousMedia();
+                            break;
+                        case "Escape":
+                            closeModal(dialog);
+                            break;
+                    }
+                })
+
+                dialogPrevious.addEventListener("click", function() {
+                    previousMedia();
+                })
+
+                dialogNext.addEventListener("click", function() {
+                    nextMedia();
                 })
 
             })            
