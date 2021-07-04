@@ -409,12 +409,22 @@ function eventHandler(sortCriteria = "popularite") {
             likes.innerHTML = mediaPhotographer.likes+" ";
 
             let heart2 = createMedia("i", heartAttributes);
+            heart2.style.cursor = "pointer";
 
             mediaCard.appendChild(mediaDiv);
             mediaCard.appendChild(bannerMedia);
             bannerMedia.appendChild(title);
             bannerMedia.appendChild(likes);
             likes.appendChild(heart2);
+
+            heart2.addEventListener("click", function(){
+                console.log("passe là")
+                mediaPhotographer.likes += 1;
+                likes.innerHTML = mediaPhotographer.likes+" ";
+                bannerMedia.appendChild(likes);
+                likes.appendChild(heart2);
+                belowElements();
+            })
 
         });
     })
@@ -426,8 +436,8 @@ function eventHandler(sortCriteria = "popularite") {
 function belowElements () {
     import('../content.json')
     .then((ns) => {        
+        photographerBelowElements.innerHTML = "";
         const photographer = ns.photographers.find(photographer => photographer.id == id);
-        console.log(photographer);
         let heart1 = createMedia("i", heartAttributes);
         let photographerLikes = document.createElement("div"); 
         let photographerLikesNumber = 0;
@@ -442,8 +452,7 @@ function belowElements () {
         arrayMedia.forEach(mediaPhotographer => {
             photographerLikesNumber += mediaPhotographer.likes;
         })
-        console.log(arrayMedia)
-        photographerLikes.innerHTML = photographerLikesNumber+" ";
+        photographerLikes.innerHTML = photographerLikesNumber+" ";        
 
         let photographerPrice = document.createElement("div");
         photographerPrice.innerHTML = photographer.price+"€ / jour";
