@@ -159,6 +159,11 @@ select option[value=date]::after {
   justify-content: space-between;
   color: #901C1C;
 }
+.banner-media-likes {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
 
 .portrait-container {
   width: 11em;

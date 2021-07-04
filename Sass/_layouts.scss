@@ -125,6 +125,11 @@ select option[value="date"] {
     width: 100%;
     justify-content: space-between;
     color: $color-site-1;
+    &-likes {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
 }
 
 .portrait-container {

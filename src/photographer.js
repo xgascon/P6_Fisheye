@@ -406,7 +406,7 @@ function eventHandler(sortCriteria = "popularite") {
             title.innerHTML = mediaPhotographer.title;
 
             let likes = document.createElement("div");
-            likes.innerHTML = mediaPhotographer.likes+" ";
+            likes.className = "banner-media-likes";
 
             let heart2 = createMedia("i", heartAttributes);
             heart2.style.cursor = "pointer";
@@ -414,15 +414,17 @@ function eventHandler(sortCriteria = "popularite") {
             mediaCard.appendChild(mediaDiv);
             mediaCard.appendChild(bannerMedia);
             bannerMedia.appendChild(title);
-            bannerMedia.appendChild(likes);
-            likes.appendChild(heart2);
 
-            heart2.addEventListener("click", function(){
-                console.log("passe là")
-                mediaPhotographer.likes += 1;
-                likes.innerHTML = mediaPhotographer.likes+" ";
+            function showLikes () {
+                likes.innerHTML = mediaPhotographer.likes+"&nbsp";
                 bannerMedia.appendChild(likes);
                 likes.appendChild(heart2);
+            }
+            showLikes()
+
+            heart2.addEventListener("click", function(){
+                mediaPhotographer.likes += 1;
+                showLikes()
                 belowElements();
             })
 
