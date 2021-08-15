@@ -1,17 +1,22 @@
-body {
-    font-family: "Open";
-    font-size: 1.5em;
-    scroll-behavior: smooth;
-    @include small-screen {
-        font-size: 1em;
+
+// Home page
+
+.homepage-header {
+    display: flex;
+    position: absolute;
+    z-index: 1;
+    margin-top: 1em;
+    left: 0;
+    width: 100%;
+    @media all and (max-width: 1400px) {
+        flex-direction: column;
     }
 }
 
-a {
-    text-decoration: none;
+.homepage-main {
+    position: relative;
+    margin-bottom: 10em;
 }
-
-// Home page
 
 .title {
     font-family: 'OpenLight';
@@ -25,13 +30,6 @@ a {
     @include small-screen {
         font-size: 1em;
         margin-top: 1.5em;
-    }
-}
-
-.logo {
-    width: 9em;
-    @include small-screen {
-        width: 8em;
     }
 }
 
@@ -72,38 +70,39 @@ a {
     }
 }
 
-.artist-name {
-    color: $color-site-2;
-    margin-top: 0.1em;
-    margin-bottom: 0.1em;
-    text-align: center;
+.artist {
+    &-name {
+        color: $color-site-2;
+        margin-top: 0.1em;
+        margin-bottom: 0.1em;
+        text-align: center;
+        // Photographer page
+        &-contact {
+            text-align: start;
+        }
+        // 
+    }
+    &-location {
+        color: $color-site-1;
+        font-size: medium;
+    }
+    &-tagline {
+        font-size: small;
+    }
+    &-price {
+        color: $color-site-4;
+        font-size: small;
+    }
+    &-tags {
+        width: auto!important;
+        padding: 0;
+        margin-top: 0.1em;
+        margin-bottom: 0.1em;
+        justify-content: flex-start;
+    }
 }
 
-.artist-name-contact {
-    text-align: start;
-}
-
-.artist-location {
-    color: $color-site-1;
-    font-size: medium;
-}
-
-.artist-tagline {
-    font-size: small;
-}
-
-.artist-price {
-    color: $color-site-4;
-    font-size: small;
-}
-
-.artist-tags {
-    width: auto!important;
-    padding: 0;
-    margin-top: 0.1em;
-    margin-bottom: 0.1em;
-    justify-content: flex-start;
-}
+// Photographer page
 
 .photographer-main {
     margin-left: 2em;
@@ -188,18 +187,84 @@ a {
     }
 }
 
-.modal-initial {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    background-color: rgba(26, 39, 156, 0.4);
+.order {
+    display: flex;
+    flex-direction: row;
+    height: 2em;
+    & span {
+        align-self: center;
+    }
+    &-by {
+        color: white;
+        background-color: $color-site-1;
+        padding: 0.5em;
+        border-color: $color-site-1;
+        border-radius: 0.3em;
+        width: fit-content;
+        height: fit-content;
+        margin-left: 0.5em;
+        z-index: 1;
+        &-dropdown {
+            display: none;
+        }
+        &-element {
+            border: none;
+            background: none;
+            color: inherit;
+            font-size: inherit;
+            cursor: pointer;
+            width: 100%;
+            text-align: start;
+        }
+    }
 }
-  
+
+.media-contenant {
+    position: relative;
+    top: 2em;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1em;
+    grid-auto-rows: minmax(100px, auto);
+    @include medium-screen {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    @include small-screen {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.media-card {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    &-page-display {
+        width: 15em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.banner-media {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    color: $color-site-1;
+    &-likes {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+}
+
+// Modal Contact
+
+.formData {
+    margin-bottom: 0.7em;
+}
+
 .content {
     margin: 5% auto;
     width: 100%;
@@ -218,17 +283,16 @@ a {
     margin: 15px auto;
 }
 
-.text-control {
-    margin: 0;
+.modal-initial {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
     width: 100%;
-    border-radius: 0.3em;
-    font-size: 20px;
-    height: 2em;
-    border: none;
-}
-
-.textarea-control {
-    height: 6em;
+    overflow: auto;
+    background-color: rgba(26, 39, 156, 0.4);
 }
 
 .modal-header {
@@ -248,44 +312,24 @@ a {
     }
 }
 
-.formData {
-    margin-bottom: 0.7em;
-}
-
-.order {
-    display: flex;
-    flex-direction: row;
-    height: 2em;
-    & span {
-        align-self: center;
-    }
-}
-
-.order-by {
-    color: white;
-    background-color: $color-site-1;
-    padding: 0.5em;
-    border-color: $color-site-1;
-    border-radius: 0.3em;
-    width: fit-content;
-    height: fit-content;
-    margin-left: 0.5em;
-    z-index: 1;
-}
-
-.order-by-dropdown {
-    display: none;
-}
-
-.order-by-element {
-    border: none;
-    background: none;
-    color: inherit;
-    font-size: inherit;
-    cursor: pointer;
+.text-control {
+    margin: 0;
     width: 100%;
-    text-align: start;
+    border-radius: 0.3em;
+    font-size: 20px;
+    height: 2em;
+    border: none;
 }
+
+.textarea-control {
+    height: 6em;
+}
+
+.formulaire-alerte {
+    font-size: small;
+}
+
+// Dialog (one media displayed in focus)
 
 .dialog {
     display: none;
@@ -324,6 +368,4 @@ a {
     }
 }
 
-.formulaire-alerte {
-    font-size: small;
-}
+
