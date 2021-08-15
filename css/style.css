@@ -31,7 +31,7 @@
   left: 0;
   width: 100%;
 }
-@media all and (max-width: 1399px) {
+@media all and (max-width: 1250px) {
   .homepage-header {
     flex-direction: column;
   }
@@ -81,12 +81,12 @@
   color: inherit !important;
   font-size: medium;
 }
-@media all and (max-width: 1399px) {
+@media all and (max-width: 1250px) {
   .main-navbar-list li a {
     font-size: 0.9em;
   }
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .main-navbar-list li a {
     padding-inline-start: 0;
     font-size: 0.8em;
@@ -129,12 +129,12 @@ select option[value=date]::after {
   grid-gap: 1em;
   grid-auto-rows: minmax(100px, auto);
 }
-@media all and (max-width: 1399px) {
+@media all and (max-width: 1250px) {
   .media-contenant {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .media-contenant {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -146,7 +146,7 @@ select option[value=date]::after {
   align-items: center;
 }
 .media-card-page-display {
-  width: 18em;
+  width: 15em;
   margin-left: auto;
   margin-right: auto;
 }
@@ -173,7 +173,7 @@ select option[value=date]::after {
   background-repeat: no-repeat;
   background-position: center center;
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .portrait-container {
     width: 8em;
     height: 8em;
@@ -196,7 +196,7 @@ body {
   font-size: 1.5em;
   scroll-behavior: smooth;
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   body {
     font-size: 1em;
   }
@@ -213,12 +213,12 @@ a {
   width: fit-content;
   color: #901C1C;
 }
-@media all and (max-width: 1399px) {
+@media all and (max-width: 1250px) {
   .title {
     margin-block-start: 0.4em;
   }
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .title {
     font-size: 1em;
     margin-top: 1.5em;
@@ -228,7 +228,7 @@ a {
 .logo {
   width: 9em;
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .logo {
     width: 8em;
   }
@@ -243,12 +243,12 @@ a {
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
 }
-@media all and (max-width: 1399px) {
+@media all and (max-width: 1250px) {
   .section-artists {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .section-artists {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -266,7 +266,7 @@ a {
   margin-top: 0.1em;
   margin-bottom: 0.1em;
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .card-artists p {
     line-height: initial;
   }
@@ -315,7 +315,7 @@ a {
   margin-right: 2em;
   margin-bottom: 5em;
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .photographer-main {
     margin-left: 0.1em;
     margin-right: 0.1em;
@@ -330,6 +330,7 @@ a {
 
 .image-container {
   background-size: cover;
+  border: none;
   border-radius: 0.3em;
   background-repeat: no-repeat;
   background-position: center center;
@@ -339,7 +340,7 @@ a {
   width: 25em;
   height: 25em;
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .image-container-dialog {
     width: 13em;
     height: 13em;
@@ -355,7 +356,7 @@ a {
   justify-content: space-between;
   background-color: #FAFAFA;
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .photographer-section-contact {
     padding: 1em 1em 0.5em 1em;
   }
@@ -365,7 +366,7 @@ a {
   display: flex;
   flex-direction: row-reverse;
 }
-@media all and (max-width: 1399px) {
+@media all and (max-width: 1250px) {
   .contact-div-button {
     position: fixed;
     bottom: 10%;
@@ -378,7 +379,7 @@ a {
 .contact-text {
   margin-right: 2em;
 }
-@media all and (max-width: 767px) {
+@media all and (max-width: 850px) {
   .contact-text {
     margin-right: 0em;
   }
@@ -396,7 +397,7 @@ a {
   font-weight: bold;
   width: 12em;
 }
-@media all and (max-width: 1399px) {
+@media all and (max-width: 1250px) {
   .photographer-belowElements {
     display: none;
   }
@@ -470,6 +471,9 @@ a {
   display: flex;
   flex-direction: row;
   height: 2em;
+}
+.order span {
+  align-self: center;
 }
 
 .order-by {

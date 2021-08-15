@@ -34,7 +34,8 @@ const verificationMessages = {
 const submitBtn = document.getElementById('submitBtn');
 let heartAttributes = {
     "aria-label": "likes", 
-    class: "fa fa-heart"
+    style: "color: inherit",
+    class: "fa fa-heart fa-lg"
 };
 
 // 
@@ -200,6 +201,7 @@ function eventHandler(sortCriteria = "popularite") {
         contactButton.addEventListener("click", function () {
             launchModal(modalInitial)
             modalInitial.setAttribute("aria-labelledby", "modal-header")
+            document.getElementById('first').focus();
         });
 
         let contactDiv = document.createElement("div");
@@ -294,13 +296,14 @@ function eventHandler(sortCriteria = "popularite") {
             let mediaCard = document.createElement("div");
             mediaCard.className = "media-card media-card-page-display";
 
-            let mediaDiv = document.createElement("div");
-            mediaDiv.setAttribute("aria-label", "photo de "+mediaPhotographer.title);
-            mediaDiv.className = "image-container";
+            let mediaBtn = document.createElement("button");
+            mediaBtn.setAttribute("aria-label", "photo de "+mediaPhotographer.title);
+            mediaBtn.className = "image-container";
 
-            mediaDiv.addEventListener("click", function() {
+            mediaBtn.addEventListener("click", function() {
                 let mediaIndex = (arrayMedia.findIndex(element => element == mediaPhotographer))
                 dialog.style.display = 'flex';
+                document.getElementById('dialog-previous').focus();
                 // dialog.showModal();
 
                 defineDialogMedia()
@@ -389,11 +392,11 @@ function eventHandler(sortCriteria = "popularite") {
             if (mediaPhotographer.image) {
 
                 let background = "./images/"+photographerSurname+"/"+mediaPhotographer.image;
-                mediaDiv.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`);
+                mediaBtn.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`);
                 window.addEventListener("resize", function () {
                     width = mediaCard.clientWidth;
                     height = width;
-                    mediaDiv.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`)                  
+                    mediaBtn.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`)                  
                 });
             } else if (mediaPhotographer.video) {
 
@@ -420,7 +423,7 @@ function eventHandler(sortCriteria = "popularite") {
 
                 video.appendChild(videoSource);
 
-                mediaDiv.appendChild(video);
+                mediaBtn.appendChild(video);
                 video.setAttribute("style", `background: black ; width: ${width}px; height: ${height}px`);
             }
             let bannerMedia = document.createElement("div");
@@ -432,21 +435,31 @@ function eventHandler(sortCriteria = "popularite") {
             let likes = document.createElement("div");
             likes.className = "banner-media-likes";
 
-            let heart2 = createMedia("i", heartAttributes);
-            heart2.style.cursor = "pointer";
+            let numLikes = document.createElement("p");
 
-            mediaCard.appendChild(mediaDiv);
+            let heartBtnAttributes = {
+                style: "cursor: pointer; color: inherit; border: none; background: none;"
+            }
+
+            let heartBtn = createMedia("button", heartBtnAttributes);
+
+            let heart2 = createMedia("i", heartAttributes);
+
+            mediaCard.appendChild(mediaBtn);
             mediaCard.appendChild(bannerMedia);
             bannerMedia.appendChild(title);
 
             function showLikes () {
-                likes.innerHTML = mediaPhotographer.likes+"&nbsp";
+                // likes.innerHTML = mediaPhotographer.likes+"&nbsp";
+                numLikes.innerHTML = mediaPhotographer.likes+"&nbsp";
                 bannerMedia.appendChild(likes);
-                likes.appendChild(heart2);
+                likes.appendChild(numLikes);
+                likes.appendChild(heartBtn);
+                heartBtn.appendChild(heart2);
             }
             showLikes()
 
-            heart2.addEventListener("click", function(){
+            heartBtn.addEventListener("click", function(){
                 mediaPhotographer.likes += 1;
                 showLikes()
                 belowElements();

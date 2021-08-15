@@ -9,9 +9,6 @@ body {
 
 a {
     text-decoration: none;
-    // &:hover {
-    //     text-decoration: none;
-    // }
 }
 
 // Home page
@@ -19,8 +16,6 @@ a {
 .title {
     font-family: 'OpenLight';
     position: absolute;
-    // text-align: right;
-    // top: -2em;
     right: 1em;
     width: fit-content;
     color: $color-site-1;
@@ -77,15 +72,6 @@ a {
     }
 }
 
-// .portrait-img {
-//     width: auto;
-//     height: 12em;
-//     clip-path: circle(50%);
-//     // clip-path: circle(4em at 50% 50%);
-//     // border-radius: 50%;
-//     border: 0.3em rgba(64,64,64,0.15) solid;
-// }
-
 .artist-name {
     color: $color-site-2;
     margin-top: 0.1em;
@@ -130,17 +116,14 @@ a {
 }
 
 .photographer-image {
-    // width: auto;
-    // height: 12em;
     width: inherit;
     height: inherit;
     border-radius: 0.3em;
 }
 
 .image-container {
-    // width: 200px;
-    // height: 200px;
     background-size: cover;
+    border: none;
     border-radius: 0.3em;
     background-repeat: no-repeat;
     background-position: center center;
@@ -172,9 +155,6 @@ a {
     display: flex;
     flex-direction: row-reverse;
     &-button {
-        // @include small-screen {
-        //     display: none;
-        // }
         @include medium-screen {
             position: fixed;
             bottom: 10%;
@@ -276,12 +256,14 @@ a {
     display: flex;
     flex-direction: row;
     height: 2em;
+    & span {
+        align-self: center;
+    }
 }
 
 .order-by {
     color: white;
     background-color: $color-site-1;
-    // font-size: 20px;
     padding: 0.5em;
     border-color: $color-site-1;
     border-radius: 0.3em;
@@ -314,7 +296,6 @@ a {
     width: 100%;
     height: 100%;
     background-color: white;
-    // display: flex;
     justify-content: center;
     align-content: center;
     flex-direction: row;
