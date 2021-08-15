@@ -8,6 +8,8 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const tagUrl = urlParams.get('tag');
 
+// Function to change the tagLink when a Tag is clicked
+
 function tagClick () {
   tagLink.forEach((btn) => { 
     if(btn.innerText.toLowerCase() == "#"+tagUrl){
@@ -22,7 +24,10 @@ function tagClick () {
   })
 }
 
+// Call the function
 tagClick();
+
+// Function to display the Redirection message when scrolling
 
 function navBarScroll () {
   window.addEventListener('scroll', function () {
@@ -34,19 +39,24 @@ function navBarScroll () {
   });
 }
 
+// Call the function
 navBarScroll();
 
-function eventHandler(filterCriteria = tagUrl) {
+// Function to display the artists information
+
+function eventHandler(filterCriteria = tagUrl) { 
     import('../content.json')
     .then((ns) => {
       var response = ns.photographers;
-      console.log(response);
       response.forEach(artist => {
-        for(var j = 0 ; j < artist.tags.length ; j++){
-          if(artist.tags[j] == "sports"){
+        // Correct each artist tags labelled sports for sport
+        for(var j = 0 ; j < artist.tags.length ; j++) {
+          if(artist.tags[j] == "sports") {
             artist.tags[j] = "sport"
           }
         }
+
+        // Create each artist information
         function createArtist () {
           let card = document.createElement("div");
           card.setAttribute("aria-label", "profil de "+artist.name);
@@ -83,6 +93,7 @@ function eventHandler(filterCriteria = tagUrl) {
           let artistTags = document.createElement("ul");
           artistTags.className = "main-navbar-list artist-tags";
 
+          // Create a list for all the artist's tags
           artist.tags.forEach(tag => {
             let tagName = tag;
             let artistTagsList = document.createElement("li");
@@ -99,6 +110,7 @@ function eventHandler(filterCriteria = tagUrl) {
             tagLink.appendChild(spanLink);
           });
 
+          // Assemble all the elements
           sectionArtists.appendChild(card);
           card.appendChild(link);
           link.appendChild(portraitContainer);
@@ -109,8 +121,10 @@ function eventHandler(filterCriteria = tagUrl) {
           artistParagraph.appendChild(artistPrice);
           card.appendChild(artistTags);
         }
-        if(filterCriteria !== null){
-          for(var i = 0 ; i < artist.tags.length ; i++){
+
+        // Create the artist information only if it contains the tag specified in the URL
+        if(filterCriteria !== null) {
+          for(var i = 0 ; i < artist.tags.length ; i++) {
             if(artist.tags[i] == tagUrl){
               createArtist();
             }
@@ -124,6 +138,7 @@ function eventHandler(filterCriteria = tagUrl) {
       console.log("erreur survenue"+error);
     });
 }
-// L'appel à la fonction
+
+// Call the function
 eventHandler()
 

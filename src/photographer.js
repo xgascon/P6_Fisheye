@@ -3,6 +3,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
 
+// Définition des constantes
 const sectionProfile = document.querySelector(".photographer-section-contact");
 const mediaContenant = document.getElementById("media-contenant");
 const modalHeader = document.getElementById("modal-header");
@@ -27,16 +28,38 @@ const alerteFirst = document.getElementById('alerte-first');
 const alerteLast = document.getElementById('alerte-last');
 const alerteEmail = document.getElementById('alerte-email');
 const alerteMessage = document.getElementById('alerte-message');
+var emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const verificationMessages = {
     charInputSize: "Veuillez entrer 2 caractères ou plus pour le champ !",
     inputEmail: "Veuillez renseigner une adresse email correcte !",
 }
 const submitBtn = document.getElementById('submitBtn');
+
+// Définition des attributs des éléments créés
 let heartAttributes = {
     "aria-label": "likes", 
     style: "color: inherit",
     class: "fa fa-heart fa-lg"
 };
+let heartBtnAttributes = {
+    style: "cursor: pointer; color: inherit; border: none; background: none;"
+}
+let contactButtonAttributes = {
+    class: "contact-button"
+};
+let contactHeaderAttributes = {
+    class: "artist-name artist-name-contact"
+}
+let contactLocationAttributes = {
+    class: "artist-location"
+}
+let contactTaglineAttributes = {
+    class: "artist-tagline"
+}
+let contactTagsAttributes = {
+    class: "main-navbar-list artist-tags"
+}
+
 
 // 
 // Modals launching and closing
@@ -57,16 +80,8 @@ modalClose.addEventListener("click", function() {
 })
 
 dialogClose.addEventListener("click", function() {
-    // dialog.close();
     closeModal(dialog)
 })
-
-// 
-// Code for form verifications
-// 
-
-// RegEx to verify email input 
-var emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 // 
 // Verification inputs on change of their data events
@@ -191,9 +206,7 @@ function eventHandler(sortCriteria = "popularite") {
         portraitContainer.setAttribute("style", `background-image: url(${backgroundPortrait.replace(" ","%20")})`);
         portraitContainer.setAttribute("aria-label", "portrait de "+photographer.name);
 
-        let contactButtonAttributes = {
-            class: "contact-button"
-        };
+        
 
         let contactButton = createMedia("button", contactButtonAttributes);
         contactButton.innerHTML = "Contactez-moi";
@@ -213,32 +226,24 @@ function eventHandler(sortCriteria = "popularite") {
         let contactText = document.createElement("div");
         contactText.className = "contact-text";
 
-        let contactHeaderAttributes = {
-            class: "artist-name artist-name-contact"
-        }
+        
 
         let contactHeader = createMedia("h1", contactHeaderAttributes);
         contactHeader.innerHTML = photographer.name;
 
         let contactParagraph = document.createElement("p");
 
-        let contactLocationAttributes = {
-            class: "artist-location"
-        }
+        
 
         let contactLocation = createMedia("span", contactLocationAttributes);
         contactLocation.innerHTML = photographer.city+", "+photographer.country;
 
-        let contactTaglineAttributes = {
-            class: "artist-tagline"
-        }
+        
 
         let contactTagline = createMedia("span", contactTaglineAttributes);
         contactTagline.innerHTML = "<br>"+photographer.tagline;
 
-        let contactTagsAttributes = {
-            class: "main-navbar-list artist-tags"
-        }
+        
 
         let contactTags = createMedia("ul", contactTagsAttributes);
         photographer.tags.forEach(tag => {
@@ -250,7 +255,7 @@ function eventHandler(sortCriteria = "popularite") {
 
             let tagLink = document.createElement("a");
             tagLink.setAttribute("href", "index.html?tag="+tagName);
-            
+
             let spanLink = document.createElement("span");
             spanLink.setAttribute("aria-label", tagName);
             spanLink.innerHTML = "#"+tagName;
@@ -440,10 +445,6 @@ function eventHandler(sortCriteria = "popularite") {
 
             let numLikes = document.createElement("p");
 
-            let heartBtnAttributes = {
-                style: "cursor: pointer; color: inherit; border: none; background: none;"
-            }
-
             let heartBtn = createMedia("button", heartBtnAttributes);
 
             let heart2 = createMedia("i", heartAttributes);
@@ -475,6 +476,7 @@ function eventHandler(sortCriteria = "popularite") {
     })
 }
 
+// Create elements 
 function belowElements () {
     import('../content.json')
     .then((ns) => {        
