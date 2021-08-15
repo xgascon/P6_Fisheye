@@ -88,12 +88,15 @@ function eventHandler(filterCriteria = tagUrl) {
             let artistTagsList = document.createElement("li");
 
             let tagLink = document.createElement("a");
-            tagLink.setAttribute("href", "tags.html?tag="+tagName);
-            tagLink.setAttribute("aria-label", tagName);
-            tagLink.innerHTML = "#"+tagName;
+            tagLink.setAttribute("href", "?tag="+tagName);
+
+            let spanLink = document.createElement("span");
+            spanLink.setAttribute("aria-label", tagName);
+            spanLink.innerHTML = "#"+tagName;
 
             artistTags.appendChild(artistTagsList); 
             artistTagsList.appendChild(tagLink);
+            tagLink.appendChild(spanLink);
           });
 
           sectionArtists.appendChild(card);

@@ -249,12 +249,15 @@ function eventHandler(sortCriteria = "popularite") {
             let artistTagsList = document.createElement("li");
 
             let tagLink = document.createElement("a");
-            tagLink.setAttribute("href", "tags.html?tag="+tagName);
-            tagLink.setAttribute("aria-label", tagName);
-            tagLink.innerHTML = "#"+tagName;
+            tagLink.setAttribute("href", "index.html?tag="+tagName);
+            
+            let spanLink = document.createElement("span");
+            spanLink.setAttribute("aria-label", tagName);
+            spanLink.innerHTML = "#"+tagName;
 
             contactTags.appendChild(artistTagsList); 
             artistTagsList.appendChild(tagLink);
+            tagLink.appendChild(spanLink);
         });
 
         sectionProfile.appendChild(portraitContainer);
