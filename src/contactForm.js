@@ -1,5 +1,6 @@
-// Définition des constantes
+import {closeModal} from "./photographerFunctions"
 
+// Définition des constantes
 const first = document.getElementById('first');
 const last = document.getElementById('last');
 const email = document.getElementById('email');
@@ -8,12 +9,15 @@ const alerteFirst = document.getElementById('alerte-first');
 const alerteLast = document.getElementById('alerte-last');
 const alerteEmail = document.getElementById('alerte-email');
 const alerteMessage = document.getElementById('alerte-message');
+var notSend = [];
 var emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const verificationMessages = {
     charInputSize: "Veuillez entrer 2 caractères ou plus pour le champ !",
     inputEmail: "Veuillez renseigner une adresse email correcte !",
 }
 const submitBtn = document.getElementById('submitBtn');
+const modalInitial = document.getElementById("modal-initial");
+const modalClose = document.getElementById("modal-header-close");
 
 // 
 // Verification inputs on change of their data events
@@ -43,7 +47,6 @@ function alertInput(condition, alerteElement, input, message) {
 // Verification for inputs requiring 2 characters 
 function verificationCharInput(alerteElement, input) {
     let condition = input.value.substr(1) === '';
-    // console.log(input.value)
     alertInput(condition, alerteElement, input, verificationMessages.charInputSize);
 }
   
@@ -79,11 +82,14 @@ function validationInput(alerteElement, input) {
 // Verify input elements on submission click event
 submitBtn.addEventListener('click', function(event){
     event.preventDefault();
-    console.log(first.value);
-    console.log(last.value);
-    console.log(email.value);
-    console.log(message.value);
-    inputVerificationAll;
+    inputVerificationAll(event);
+    if (!notSend.includes(true)) {
+        console.log(first.value);
+        console.log(last.value);
+        console.log(email.value);
+        console.log(message.value);
+    }
+    notSend = [];
 });
   
 // Verify all inputs form
@@ -98,7 +104,14 @@ function inputVerificationAll(event) {
 function inputVerification(event, alerteElement, input, message){
     if(alerteElement.textContent != validationInputMessage){
         event.preventDefault();
-        // alert("Veuillez compléter tous les champs.");
-        erreurInput(alerteElement, message, input );
-    } 
+        erreurInput(alerteElement, message, input);
+        notSend.push(true);
+    } else if(alerteElement.textContent == validationInputMessage){
+        notSend.push(false);
+    }
 }
+
+// Close the contact form
+modalClose.addEventListener("click", function() {
+    closeModal(modalInitial);
+})

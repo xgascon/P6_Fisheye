@@ -9,7 +9,6 @@ const urlParams = new URLSearchParams(queryString);
 const tagUrl = urlParams.get('tag');
 
 // Function to change the tagLink when a Tag is clicked
-
 function tagClick () {
   tagLink.forEach((btn) => { 
     if(btn.innerText.toLowerCase() == "#"+tagUrl){
@@ -28,7 +27,6 @@ function tagClick () {
 tagClick();
 
 // Function to display the Redirection message when scrolling
-
 function navBarScroll () {
   window.addEventListener('scroll', function () {
       if ( document.documentElement.scrollTop > 10 ) {
@@ -43,7 +41,6 @@ function navBarScroll () {
 navBarScroll();
 
 // Function to display the artists information
-
 function eventHandler(filterCriteria = tagUrl) { 
     import('../content.json')
     .then((ns) => {

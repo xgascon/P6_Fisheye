@@ -1,4 +1,8 @@
 import "./contactForm"
+import "./photographerContact"
+import "./orderMedia"
+import {closeModal, createMedia, defineDialogMedia, insertBground, sorting} from "./photographerFunctions"
+import {belowElements} from "./belowElements"
 
 // Récupération de l'identifiant du photographe d'après l'adresse URL
 const queryString = window.location.search;
@@ -6,22 +10,13 @@ const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
 
 // Définition des constantes
-const sectionProfile = document.querySelector(".photographer-section-contact");
 const mediaContenant = document.getElementById("media-contenant");
-const modalHeader = document.getElementById("modal-header");
-const photographerBelowElements = document.querySelector(".photographer-belowElements");
-const modalInitial = document.getElementById("modal-initial");
-const modalClose = document.getElementById("modal-header-close");
 const dialog = document.getElementById('dialog');
 const dialogImgContainer = document.getElementById('dialog-img-container');
-const dialogClose = document.getElementById('dialog-close');
 const titleDialog = document.getElementById('title-dialog');
 const dialogPrevious = document.getElementById('dialog-previous');
 const dialogNext = document.getElementById('dialog-next');
-const orderByTrigger = document.getElementById('order-by-trigger');
-const orderByTriggerText = document.getElementById('order-by-trigger-text');
-const orderByDropdown = document.getElementById('order-by-dropdown');
-const orderByDropdownElement = document.querySelectorAll('.order-by-dropdown-element');
+const dialogClose = document.getElementById('dialog-close');
 
 // Définition des attributs des éléments créés
 let heartAttributes = {
@@ -29,155 +24,38 @@ let heartAttributes = {
     style: "color: inherit",
     class: "fa fa-heart fa-lg"
 };
+
+export {heartAttributes};
+
 let heartBtnAttributes = {
     style: "cursor: pointer; color: inherit; border: none; background: none;"
 }
-let contactButtonAttributes = {
-    class: "contact-button"
-};
-let contactHeaderAttributes = {
-    class: "artist-name artist-name-contact"
-}
-let contactLocationAttributes = {
-    class: "artist-location"
-}
-let contactTaglineAttributes = {
-    class: "artist-tagline"
-}
-let contactTagsAttributes = {
-    class: "main-navbar-list artist-tags"
-}
 
-// 
-// Modals launching and closing
-// 
-
-// launch modals
-function launchModal(modal) {
-    modal.style.display = "block";
-}
-
-// close modals
-function closeModal(modal) {
-    modal.style.display = "none";
-}
-
-modalClose.addEventListener("click", function() {
-    closeModal(modalInitial);
-})
-
-dialogClose.addEventListener("click", function() {
-    closeModal(dialog)
-})
-
-// 
-// Code for layout display
-// 
-
-// Gérer la fonction pour que criteria s'adapte en fonction du sortCriteria
-function sorting(table, sortCriteria) {
-    let x = sortCriteria == "titre" ? 1 : -1;
-    let y = sortCriteria == "titre" ? -1 : 1;
-    let criteria = "likes";
-    if(sortCriteria == "date") {
-        criteria = "date";
-    } else if(sortCriteria == "titre") {
-        criteria = "title";
-    }
-    return table.sort((a, b) => (a[criteria] > b[criteria]) ? x : y);
-}
-
+// Display all the media considering the sorting criteria
 function eventHandler(sortCriteria = "popularite") {
     import('../content.json')
     .then((ns) => {
         console.log(ns);
+        // Set to empty the content 
         mediaContenant.innerHTML = "" ;
 
-        sectionProfile.innerHTML = "" ;
+        // Get the photographer in the content.json
+        const photographer = ns.photographers.find(photographer => photographer.id == id); 
 
-        const photographer = ns.photographers.find(photographer => photographer.id == id);
+        // Get the photographer surname and spell it correctly to seek in images folder
+        let photographerSurnameFolder;
+        photographerSurnameFolder = photographer.name.split(' ')[0];
+        console.log(photographerSurnameFolder)
 
-        modalHeader.innerHTML = "Contactez-moi<br>"+photographer.name;
-
-        let portraitContainer = document.createElement("div");
-        portraitContainer.className = "portrait-container";
-        let backgroundPortrait = "./images/Photographers%20ID%20Photos/"+photographer.portrait;
-        portraitContainer.setAttribute("style", `background-image: url(${backgroundPortrait.replace(" ","%20")})`);
-        portraitContainer.setAttribute("aria-label", "portrait de "+photographer.name);
-
-        let contactButton = createMedia("button", contactButtonAttributes);
-        contactButton.innerHTML = "Contactez-moi";
-        contactButton.setAttribute("aria-label", "Contactez-moi");
-        contactButton.addEventListener("click", function () {
-            launchModal(modalInitial)
-            modalInitial.setAttribute("aria-labelledby", "modal-header")
-            document.getElementById('first').focus();
-        });
-
-        let contactDiv = document.createElement("div");
-        contactDiv.className = "contact-div";
-
-        let contactButtonDiv = document.createElement("div");
-        contactButtonDiv.className = "contact-div-button";
-
-        let contactText = document.createElement("div");
-        contactText.className = "contact-text";
-
-        let contactHeader = createMedia("h1", contactHeaderAttributes);
-        contactHeader.innerHTML = photographer.name;
-
-        let contactParagraph = document.createElement("p");        
-
-        let contactLocation = createMedia("span", contactLocationAttributes);
-        contactLocation.innerHTML = photographer.city+", "+photographer.country;
-
-        let contactTagline = createMedia("span", contactTaglineAttributes);
-        contactTagline.innerHTML = "<br>"+photographer.tagline;
-
-        let contactTags = createMedia("ul", contactTagsAttributes);
-        photographer.tags.forEach(tag => {
-            let tagName = tag;
-            if(tag === "sports") {
-              tagName = "sport";
+        if(photographerSurnameFolder.split('-').length > 1) {
+            let nameBitsAssembled = photographerSurnameFolder.split('-')[0];
+            for (var i = 1; i <= photographerSurnameFolder.split('-').length-1; i++) {
+                nameBitsAssembled += " "+photographerSurnameFolder.split('-')[i];
             }
-            let artistTagsList = document.createElement("li");
-
-            let tagLink = document.createElement("a");
-            tagLink.setAttribute("href", "index.html?tag="+tagName);
-
-            let spanLink = document.createElement("span");
-            spanLink.setAttribute("aria-label", tagName);
-            spanLink.innerHTML = "#"+tagName;
-
-            contactTags.appendChild(artistTagsList); 
-            artistTagsList.appendChild(tagLink);
-            tagLink.appendChild(spanLink);
-        });
-
-        sectionProfile.appendChild(portraitContainer);
-        sectionProfile.appendChild(contactDiv);
-
-        contactDiv.appendChild(contactButtonDiv);
-        contactDiv.appendChild(contactText);
-        contactButtonDiv.appendChild(contactButton);
-        contactText.appendChild(contactHeader);
-        contactText.appendChild(contactParagraph);
-        contactParagraph.appendChild(contactLocation);
-        contactParagraph.appendChild(contactTagline);
-        contactText.appendChild(contactTags);
-
-        // Section Medias
-        let photographerSurname;
-        photographerSurname = photographer.name.split(' ')[0];
-
-        if(photographerSurname.split('-').length > 1) {
-            let nameBitsAssembled = photographerSurname.split('-')[0];
-            for (var i = 1; i <= photographerSurname.split('-').length-1; i++) {
-                nameBitsAssembled += " "+photographerSurname.split('-')[i];
-            }
-            photographerSurname = nameBitsAssembled;
+            photographerSurnameFolder = nameBitsAssembled;
         }
 
+        // Get all the media from the photographer and push it into an array
         var response = ns.media;
         let arrayMedia = [];
         response.forEach(media => {
@@ -186,8 +64,10 @@ function eventHandler(sortCriteria = "popularite") {
             }
         });
 
+        // Sort the array 
         arrayMedia = sorting(arrayMedia, sortCriteria)
 
+        // Display the elements of the array
         arrayMedia.forEach(mediaPhotographer => {            
             
             let mediaCard = document.createElement("div");
@@ -197,132 +77,6 @@ function eventHandler(sortCriteria = "popularite") {
             mediaBtn.setAttribute("aria-label", "photo de "+mediaPhotographer.title);
             mediaBtn.className = "image-container";
 
-            mediaBtn.addEventListener("click", function() {
-                let mediaIndex = (arrayMedia.findIndex(element => element == mediaPhotographer))
-                dialog.style.display = 'flex';
-                document.getElementById('dialog-previous').focus();
-                // dialog.showModal();
-
-                defineDialogMedia()
-
-                function defineDialogMedia() {
-                    if (arrayMedia[mediaIndex].image) {
-                        if (dialogImgContainer.firstElementChild) {
-                            dialogImgContainer.removeChild(dialogImgContainer.firstElementChild);
-                        }
-                        let backgroundDialog = "./images/"+photographerSurname+"/"+arrayMedia[mediaIndex].image;
-                        dialogImgContainer.setAttribute("style", `background-image: url(${backgroundDialog.replace(" ", "%20")});`);
-                        dialogImgContainer.setAttribute("aria-label", "photo de "+arrayMedia[mediaIndex].title);
-                    } else if (arrayMedia[mediaIndex].video) {
-                        dialogImgContainer.setAttribute("style", `background-image: none`);
-                        let videoSourceAttributes = {
-                            "src": "./images/"+photographerSurname+"/"+arrayMedia[mediaIndex].video, 
-                            "type": "video/mp4",
-                        };
-        
-                        let videoSource = createMedia("source", videoSourceAttributes);
-        
-                        let videoAttributes = {
-                            "preload": "auto", 
-                            "controls": true,
-                            class: "photographer-image"
-                        };
-                        let video = createMedia("video", videoAttributes);
-                        video.setAttribute("style", `background: black;`);
-                        video.appendChild(videoSource);
-
-                        dialogImgContainer.setAttribute("aria-label", arrayMedia[mediaIndex].title);
-                        dialogImgContainer.appendChild(video);
-                        
-                    }
-                    titleDialog.innerHTML = arrayMedia[mediaIndex].title;
-                }      
-                
-                function previousMedia () {
-                    if(mediaIndex == 0) {
-                        mediaIndex = arrayMedia.length-1
-                    } else {
-                        mediaIndex--;
-                    } 
-                    defineDialogMedia();
-                }
-
-                function nextMedia () {
-                    if(mediaIndex == arrayMedia.length-1) {
-                        mediaIndex = 0
-                    } else {
-                        mediaIndex++;
-                    }                    
-                    defineDialogMedia();
-                }
-
-                document.addEventListener("keydown", function(event) {
-                    // eslint-disable-next-line default-case
-                    switch(event.key) {
-                        case "ArrowRight":
-                            nextMedia();
-                            break;
-                        case "ArrowLeft":
-                            previousMedia();
-                            break;
-                        case "Escape":
-                            closeModal(dialog);
-                            break;
-                    }
-                })
-
-                dialogPrevious.addEventListener("click", function() {
-                    previousMedia();
-                })
-
-                dialogNext.addEventListener("click", function() {
-                    nextMedia();
-                })
-
-            })            
-
-            mediaContenant.appendChild(mediaCard);
-
-            let width = mediaCard.clientWidth;
-            let height = width;
-
-            if (mediaPhotographer.image) {
-
-                let background = "./images/"+photographerSurname+"/"+mediaPhotographer.image;
-                mediaBtn.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`);
-                window.addEventListener("resize", function () {
-                    width = mediaCard.clientWidth;
-                    height = width;
-                    mediaBtn.setAttribute("style", `background-image: url(${background.replace(" ","%20")}); width: ${width}px; height: ${height}px`)                  
-                });
-            } else if (mediaPhotographer.video) {
-
-                let videoSourceAttributes = {
-                    "src": "./images/"+photographerSurname+"/"+mediaPhotographer.video, 
-                    "type": "video/mp4",
-                };
-
-                let videoSource = createMedia("source", videoSourceAttributes);
-
-                let videoAttributes = {
-                    "preload": "auto", 
-                    "controls": true,
-                    class: "photographer-image"
-                };
-
-                window.addEventListener("resize", function () {
-                    width = mediaCard.clientWidth;
-                    height = width;
-                    video.setAttribute("style", `background: black; width: ${width}px; height: ${height}px`)                  
-                });
-
-                let video = createMedia("video", videoAttributes);
-
-                video.appendChild(videoSource);
-
-                mediaBtn.appendChild(video);
-                video.setAttribute("style", `background: black ; width: ${width}px; height: ${height}px`);
-            }
             let bannerMedia = document.createElement("div");
             bannerMedia.className = "banner-media";
 
@@ -338,12 +92,74 @@ function eventHandler(sortCriteria = "popularite") {
 
             let heart2 = createMedia("i", heartAttributes);
 
+            // Assemble the elements
+            mediaContenant.appendChild(mediaCard);
             mediaCard.appendChild(mediaBtn);
             mediaCard.appendChild(bannerMedia);
             bannerMedia.appendChild(title);
 
-            function showLikes () {
-                // likes.innerHTML = mediaPhotographer.likes+"&nbsp";
+            // Insert the media as the background of mediaCard
+            insertBground(mediaPhotographer, photographerSurnameFolder, mediaBtn, mediaCard)
+
+            // Generate the dialog window content at the click of the image
+            mediaBtn.addEventListener("click", function() {
+                let mediaIndex = (arrayMedia.findIndex(element => element == mediaPhotographer));
+                dialog.style.display = 'flex';
+                document.getElementById('dialog-previous').focus();
+
+                defineDialogMedia(arrayMedia, photographerSurnameFolder, mediaIndex, dialogImgContainer, titleDialog);    
+                
+                // Functions to navigate through media
+                function previousMedia() {
+                    if(mediaIndex == 0) {
+                        mediaIndex = arrayMedia.length-1
+                    } else {
+                        mediaIndex--;
+                    } 
+                    defineDialogMedia(arrayMedia, photographerSurnameFolder, mediaIndex, dialogImgContainer, titleDialog); 
+                }
+
+                function nextMedia() {
+                    if(mediaIndex == arrayMedia.length-1) {
+                        mediaIndex = 0
+                    } else {
+                        mediaIndex++;
+                    }                    
+                    defineDialogMedia(arrayMedia, photographerSurnameFolder, mediaIndex, dialogImgContainer, titleDialog); 
+                }
+
+                // Events on click on arrows and cross to close window
+                dialogPrevious.addEventListener("click", function() {
+                    previousMedia();
+                })
+
+                dialogNext.addEventListener("click", function() {
+                    nextMedia();
+                })
+
+                dialogClose.addEventListener("click", function() {
+                    closeModal(dialog)
+                })
+
+                // Events for navigation with keyboard only
+                document.addEventListener("keydown", function(event) {
+                    // eslint-disable-next-line default-case
+                    switch(event.key) {
+                        case "ArrowRight":
+                            nextMedia();
+                            break;
+                        case "ArrowLeft":
+                            previousMedia();
+                            break;
+                        case "Escape":
+                            closeModal(dialog);
+                            break;
+                    }
+                })
+            })                        
+
+            // Generate the number of likes for each media
+            function showLikes() {
                 numLikes.innerHTML = mediaPhotographer.likes+"&nbsp";
                 bannerMedia.appendChild(likes);
                 likes.appendChild(numLikes);
@@ -352,12 +168,12 @@ function eventHandler(sortCriteria = "popularite") {
             }
             showLikes()
 
+            // Increment number of likes on click 
             heartBtn.addEventListener("click", function(){
                 mediaPhotographer.likes += 1;
                 showLikes()
                 belowElements();
             })
-
         });
     })
     .catch((error) => {
@@ -365,61 +181,7 @@ function eventHandler(sortCriteria = "popularite") {
     })
 }
 
-// Create elements 
-function belowElements () {
-    import('../content.json')
-    .then((ns) => {        
-        photographerBelowElements.innerHTML = "";
-        const photographer = ns.photographers.find(photographer => photographer.id == id);
-        let heart1 = createMedia("i", heartAttributes);
-        let photographerLikes = document.createElement("div"); 
-        let photographerLikesNumber = 0;
-        var response = ns.media;
-        let arrayMedia = [];
-        response.forEach(media => {
-            if (media.photographerId == id) {
-                arrayMedia.push(media)
-            }
-        });
-      
-        arrayMedia.forEach(mediaPhotographer => {
-            photographerLikesNumber += mediaPhotographer.likes;
-        })
-        photographerLikes.innerHTML = photographerLikesNumber+" ";        
+export {eventHandler};
 
-        let photographerPrice = document.createElement("div");
-        photographerPrice.innerHTML = photographer.price+"€ / jour";
-
-        photographerBelowElements.appendChild(photographerLikes);
-        photographerLikes.appendChild(heart1);
-        photographerBelowElements.appendChild(photographerPrice);
-    })
-    .catch((error) => {
-        console.log("erreur survenue dans belowElements"+error);
-    })
-}
-
+// Call the function
 eventHandler();
-belowElements();
-
-orderByTrigger.addEventListener("click", function () {
-    orderByTrigger.style.display = 'none';
-    orderByDropdown.style.display = 'block';
-});
-
-orderByDropdownElement.forEach((btn) => {
-    btn.addEventListener("click", function () {
-        eventHandler(btn.value)
-        orderByTriggerText.innerText = btn.innerText;
-        orderByDropdown.style.display = 'none';
-        orderByTrigger.style.display = 'block';
-    })    
-});
-
-function createMedia (tagName, attributes) {
-    let tag = document.createElement(tagName);
-    for (const attribute in attributes) {
-        tag.setAttribute(attribute, attributes[attribute])
-    }
-    return tag;
-}
