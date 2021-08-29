@@ -1,8 +1,8 @@
 import "./contactForm"
 import "./photographerContact"
 import "./orderMedia"
-import {closeModal, createMedia, defineDialogMedia, insertBground, sorting} from "./photographerFunctions"
-import {belowElements} from "./belowElements"
+import {CreateMedia} from "./createMedia"
+import {sorting} from "./photographerFunctions"
 
 // Récupération de l'identifiant du photographe d'après l'adresse URL
 const queryString = window.location.search;
@@ -11,12 +11,6 @@ const id = urlParams.get('id');
 
 // Définition des constantes
 const mediaContenant = document.getElementById("media-contenant");
-const dialog = document.getElementById('dialog');
-const dialogImgContainer = document.getElementById('dialog-img-container');
-const titleDialog = document.getElementById('title-dialog');
-const dialogPrevious = document.getElementById('dialog-previous');
-const dialogNext = document.getElementById('dialog-next');
-const dialogClose = document.getElementById('dialog-close');
 
 // Définition des attributs des éléments créés
 let heartAttributes = {
@@ -26,10 +20,6 @@ let heartAttributes = {
 };
 
 export {heartAttributes};
-
-let heartBtnAttributes = {
-    style: "cursor: pointer; color: inherit; border: none; background: none;"
-}
 
 // Display all the media considering the sorting criteria
 function eventHandler(sortCriteria = "popularite") {
@@ -68,113 +58,114 @@ function eventHandler(sortCriteria = "popularite") {
         arrayMedia = sorting(arrayMedia, sortCriteria)
 
         // Display the elements of the array
-        arrayMedia.forEach(mediaPhotographer => {            
+        CreateMedia.build(arrayMedia, photographerSurnameFolder);
+        // arrayMedia.forEach(mediaPhotographer => {            
             
-            let mediaCard = document.createElement("div");
-            mediaCard.className = "media-card media-card-page-display";
+        //     let mediaCard = document.createElement("div");
+        //     mediaCard.className = "media-card media-card-page-display";
 
-            let mediaBtn = document.createElement("button");
-            mediaBtn.setAttribute("aria-label", "photo de "+mediaPhotographer.title);
-            mediaBtn.className = "image-container";
+        //     let mediaBtn = document.createElement("button");
+        //     mediaBtn.setAttribute("aria-label", "photo de "+mediaPhotographer.title);
+        //     mediaBtn.className = "image-container";
 
-            let bannerMedia = document.createElement("div");
-            bannerMedia.className = "banner-media";
+        //     let bannerMedia = document.createElement("div");
+        //     bannerMedia.className = "banner-media";
 
-            let title = document.createElement("h3");
-            title.innerHTML = mediaPhotographer.title;
+        //     let title = document.createElement("h3");
+        //     title.innerHTML = mediaPhotographer.title;
 
-            let likes = document.createElement("div");
-            likes.className = "banner-media-likes";
+        //     let likes = document.createElement("div");
+        //     likes.className = "banner-media-likes";
 
-            let numLikes = document.createElement("p");
+        //     let numLikes = document.createElement("p");
 
-            let heartBtn = createMedia("button", heartBtnAttributes);
+        //     let heartBtn = createMedia("button", heartBtnAttributes);
 
-            let heart2 = createMedia("i", heartAttributes);
+        //     let heart2 = createMedia("i", heartAttributes);
 
-            // Assemble the elements
-            mediaContenant.appendChild(mediaCard);
-            mediaCard.appendChild(mediaBtn);
-            mediaCard.appendChild(bannerMedia);
-            bannerMedia.appendChild(title);
+        //     // Assemble the elements
+        //     mediaContenant.appendChild(mediaCard);
+        //     mediaCard.appendChild(mediaBtn);
+        //     mediaCard.appendChild(bannerMedia);
+        //     bannerMedia.appendChild(title);
 
-            // Insert the media as the background of mediaCard
-            insertBground(mediaPhotographer, photographerSurnameFolder, mediaBtn, mediaCard)
+        //     // Insert the media as the background of mediaCard
+        //     insertBground(mediaPhotographer, photographerSurnameFolder, mediaBtn, mediaCard)
 
-            // Generate the dialog window content at the click of the image
-            mediaBtn.addEventListener("click", function() {
-                let mediaIndex = (arrayMedia.findIndex(element => element == mediaPhotographer));
-                dialog.style.display = 'flex';
-                document.getElementById('dialog-previous').focus();
+        //     // Generate the dialog window content at the click of the image
+        //     mediaBtn.addEventListener("click", function() {
+        //         let mediaIndex = (arrayMedia.findIndex(element => element == mediaPhotographer));
+        //         dialog.style.display = 'flex';
+        //         document.getElementById('dialog-previous').focus();
 
-                defineDialogMedia(arrayMedia, photographerSurnameFolder, mediaIndex, dialogImgContainer, titleDialog);    
+        //         defineDialogMedia(arrayMedia, photographerSurnameFolder, mediaIndex, dialogImgContainer, titleDialog);    
                 
-                // Functions to navigate through media
-                function previousMedia() {
-                    if(mediaIndex == 0) {
-                        mediaIndex = arrayMedia.length-1
-                    } else {
-                        mediaIndex--;
-                    } 
-                    defineDialogMedia(arrayMedia, photographerSurnameFolder, mediaIndex, dialogImgContainer, titleDialog); 
-                }
+        //         // Functions to navigate through media
+        //         function previousMedia() {
+        //             if(mediaIndex == 0) {
+        //                 mediaIndex = arrayMedia.length-1
+        //             } else {
+        //                 mediaIndex--;
+        //             } 
+        //             defineDialogMedia(arrayMedia, photographerSurnameFolder, mediaIndex, dialogImgContainer, titleDialog); 
+        //         }
 
-                function nextMedia() {
-                    if(mediaIndex == arrayMedia.length-1) {
-                        mediaIndex = 0
-                    } else {
-                        mediaIndex++;
-                    }                    
-                    defineDialogMedia(arrayMedia, photographerSurnameFolder, mediaIndex, dialogImgContainer, titleDialog); 
-                }
+        //         function nextMedia() {
+        //             if(mediaIndex == arrayMedia.length-1) {
+        //                 mediaIndex = 0
+        //             } else {
+        //                 mediaIndex++;
+        //             }                    
+        //             defineDialogMedia(arrayMedia, photographerSurnameFolder, mediaIndex, dialogImgContainer, titleDialog); 
+        //         }
 
-                // Events on click on arrows and cross to close window
-                dialogPrevious.addEventListener("click", function() {
-                    previousMedia();
-                })
+        //         // Events on click on arrows and cross to close window
+        //         dialogPrevious.addEventListener("click", function() {
+        //             previousMedia();
+        //         })
 
-                dialogNext.addEventListener("click", function() {
-                    nextMedia();
-                })
+        //         dialogNext.addEventListener("click", function() {
+        //             nextMedia();
+        //         })
 
-                dialogClose.addEventListener("click", function() {
-                    closeModal(dialog)
-                })
+        //         dialogClose.addEventListener("click", function() {
+        //             closeModal(dialog)
+        //         })
 
-                // Events for navigation with keyboard only
-                document.addEventListener("keydown", function(event) {
-                    // eslint-disable-next-line default-case
-                    switch(event.key) {
-                        case "ArrowRight":
-                            nextMedia();
-                            break;
-                        case "ArrowLeft":
-                            previousMedia();
-                            break;
-                        case "Escape":
-                            closeModal(dialog);
-                            break;
-                    }
-                })
-            })                        
+        //         // Events for navigation with keyboard only
+        //         document.addEventListener("keydown", function(event) {
+        //             // eslint-disable-next-line default-case
+        //             switch(event.key) {
+        //                 case "ArrowRight":
+        //                     nextMedia();
+        //                     break;
+        //                 case "ArrowLeft":
+        //                     previousMedia();
+        //                     break;
+        //                 case "Escape":
+        //                     closeModal(dialog);
+        //                     break;
+        //             }
+        //         })
+        //     })                        
 
-            // Generate the number of likes for each media
-            function showLikes() {
-                numLikes.innerHTML = mediaPhotographer.likes+"&nbsp";
-                bannerMedia.appendChild(likes);
-                likes.appendChild(numLikes);
-                likes.appendChild(heartBtn);
-                heartBtn.appendChild(heart2);
-            }
-            showLikes()
+        //     // Generate the number of likes for each media
+        //     function showLikes() {
+        //         numLikes.innerHTML = mediaPhotographer.likes+"&nbsp";
+        //         bannerMedia.appendChild(likes);
+        //         likes.appendChild(numLikes);
+        //         likes.appendChild(heartBtn);
+        //         heartBtn.appendChild(heart2);
+        //     }
+        //     showLikes()
 
-            // Increment number of likes on click 
-            heartBtn.addEventListener("click", function(){
-                mediaPhotographer.likes += 1;
-                showLikes()
-                belowElements();
-            })
-        });
+        //     // Increment number of likes on click 
+        //     heartBtn.addEventListener("click", function(){
+        //         mediaPhotographer.likes += 1;
+        //         showLikes()
+        //         belowElements();
+        //     })
+        // });
     })
     .catch((error) => {
         console.log("erreur survenue", error);
